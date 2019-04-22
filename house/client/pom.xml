@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>house-client</artifactId>
+    <version>1.0.0-Release</version>
+    <packaging>jar</packaging>
+
+    <name>home-house-client</name>
+    <description>Link Zhang's Spring Cloud Project Home House Client</description>
+
+    <parent>
+        <groupId>cn.sh.lz.cloud</groupId>
+        <artifactId>house</artifactId>
+        <version>1.0.0-Release</version>
+    </parent>
+
+    <properties>
+        <house-common.version>1.0.0-Release</house-common.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>house-common</artifactId>
+            <version>${house-common.version}</version>
+        </dependency>
+    </dependencies>
+</project>

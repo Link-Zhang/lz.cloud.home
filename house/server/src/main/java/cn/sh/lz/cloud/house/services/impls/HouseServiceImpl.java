@@ -1,0 +1,286 @@
+package cn.sh.lz.cloud.house.services.impls;
+
+import cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO;
+import cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO;
+import cn.sh.lz.cloud.house.common.dos.HouseCountDO;
+import cn.sh.lz.cloud.house.common.dtos.HouseAvgTotalPriceDTO;
+import cn.sh.lz.cloud.house.common.dtos.HouseAvgUnitPriceDTO;
+import cn.sh.lz.cloud.house.common.dtos.HouseCountDTO;
+import cn.sh.lz.cloud.house.common.dtos.HouseDTO;
+import cn.sh.lz.cloud.house.common.entities.House;
+import cn.sh.lz.cloud.house.common.utils.ConvertUtil;
+import cn.sh.lz.cloud.house.repositories.HouseRepository;
+import cn.sh.lz.cloud.house.services.HouseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import javax.persistence.criteria.Predicate;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Created by Link at 16:48 on 4/11/19.
+ */
+@Service
+public class HouseServiceImpl implements HouseService {
+    @Autowired
+    private HouseRepository houseRepository;
+
+    @Value("${cn.sh.lz.cloud.house.default.size}")
+    private Integer DEFAULT_SIZE;
+
+    @Value("${cn.sh.lz.cloud.house.default.page}")
+    private Integer DEFAULT_PAGE;
+
+    @Value("${cn.sh.lz.cloud.house.default.price}")
+    private Double DEFAULT_PRICE;
+
+    // todo: method too complex
+    private Specification<House> getHouseSpecification(HouseDTO houseDTO) {
+        Assert.notNull(houseDTO, "The given houseDTO must not be null!");
+        Double ceilStructureArea = Optional.ofNullable(houseDTO.getHouseLeStructureArea()).filter(i -> i > 0).orElse(null);
+        Double floorStructureArea = Optional.ofNullable(houseDTO.getHouseGeStructureArea()).filter(i -> i > 0).orElse(null);
+        Double ceilTotalPrice = Optional.ofNullable(houseDTO.getHouseLeTotalPrice()).filter(i -> i > 0).orElse(null);
+        Double floorTotalPrice = Optional.ofNullable(houseDTO.getHouseGeTotalPrice()).filter(i -> i > 0).orElse(null);
+        Long ceilDownPayment = Optional.ofNullable(houseDTO.getHouseLeDownPayment()).filter(i -> i > 0).orElse(null);
+        Long floorDownPayment = Optional.ofNullable(houseDTO.getHouseGeDownPayment()).filter(i -> i > 0).orElse(null);
+        Long ceilUnitPrice = Optional.ofNullable(houseDTO.getHouseLeUnitPrice()).filter(i -> i > 0).orElse(null);
+        Long floorUnitPrice = Optional.ofNullable(houseDTO.getHouseGeUnitPrice()).filter(i -> i > 0).orElse(null);
+        return (Specification<House>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (!StringUtils.isEmpty(houseDTO.getHouseDistrict())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseDistrict").as(String.class), "%" + houseDTO.getHouseDistrict() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseCommunityId())) {
+                predicateList.add(criteriaBuilder.equal(root.get("houseCommunityId").as(BigInteger.class), houseDTO.getHouseCommunityId()));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseCommunityName())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseCommunityName").as(String.class), "%" + houseDTO.getHouseCommunityName().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseUsage())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseUsage").as(String.class), "%" + houseDTO.getHouseUsage().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseTradingSituation())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseTradingSituation").as(String.class), "%" + houseDTO.getHouseTradingSituation().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseIsUnique())) {
+                predicateList.add(criteriaBuilder.equal(root.get("houseIsUnique").as(String.class), houseDTO.getHouseIsUnique()));
+            }
+            if (null != ceilStructureArea) {
+                predicateList.add(criteriaBuilder.le(root.get("houseStructureArea").as(Double.class), ceilStructureArea));
+            }
+            if (null != floorStructureArea) {
+                predicateList.add(criteriaBuilder.ge(root.get("houseStructureArea").as(Double.class), floorStructureArea));
+            }
+            if (null != ceilTotalPrice) {
+                predicateList.add(criteriaBuilder.le(root.get("houseTotalPrice").as(Double.class), ceilTotalPrice));
+            }
+            if (null != floorTotalPrice) {
+                predicateList.add(criteriaBuilder.ge(root.get("houseTotalPrice").as(Double.class), floorTotalPrice));
+            }
+            if (null != ceilDownPayment) {
+                predicateList.add(criteriaBuilder.le(root.get("houseDownPayment").as(Long.class), ceilDownPayment));
+            }
+            if (null != floorDownPayment) {
+                predicateList.add(criteriaBuilder.ge(root.get("houseDownPayment").as(Long.class), floorDownPayment));
+            }
+            if (null != ceilUnitPrice) {
+                predicateList.add(criteriaBuilder.le(root.get("houseUnitPrice").as(Long.class), ceilUnitPrice));
+            }
+            if (null != floorUnitPrice) {
+                predicateList.add(criteriaBuilder.ge(root.get("houseUnitPrice").as(Long.class), floorUnitPrice));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseType())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseType").as(String.class), "%" + houseDTO.getHouseType().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseFloor())) {
+                predicateList.add(criteriaBuilder.like(root.get("house_floor").as(String.class), "%" + houseDTO.getHouseFloor().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseDirection())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseDirection").as(String.class), "%" + houseDTO.getHouseDirection().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseDecoration())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseDecoration").as(String.class), "%" + houseDTO.getHouseDecoration().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseHasElevator())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseHasElevator").as(String.class), "%" + houseDTO.getHouseHasElevator().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseAge())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseAge").as(String.class), "%" + houseDTO.getHouseAge().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseTradingOwnership())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseTradingOwnership").as(String.class), "%" + houseDTO.getHouseTradingOwnership().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHousePropertyOwnership())) {
+                predicateList.add(criteriaBuilder.like(root.get("housePropertyOwnership").as(String.class), "%" + houseDTO.getHousePropertyOwnership().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseMortgage())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseMortgage").as(String.class), "%" + houseDTO.getHouseMortgage().trim() + "%"));
+            }
+            if (!StringUtils.isEmpty(houseDTO.getHouseCertificate())) {
+                predicateList.add(criteriaBuilder.like(root.get("houseCertificate").as(String.class), "%" + houseDTO.getHouseCertificate().trim() + "%"));
+            }
+            Predicate[] predicate = new Predicate[predicateList.size()];
+            return criteriaBuilder.and(predicateList.toArray(predicate));
+        };
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Page<House> findAllPaginated(HouseDTO houseDTO, Pageable pageable) {
+        Assert.notNull(pageable, "The given pageable must not be null!");
+        if (Optional.ofNullable(houseDTO).isPresent()) {
+            return houseRepository.findAll(getHouseSpecification(houseDTO), pageable);
+        } else {
+            return houseRepository.findAll(pageable);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<HouseAvgTotalPriceDTO> findAvgTotalPrice(String district) {
+        List<HouseAvgTotalPriceDO> list;
+        if (StringUtils.isEmpty(district)) {
+            list = houseRepository.findAvgTotalPrice();
+        } else {
+            list = houseRepository.findDistrictAvgTotalPrice(district);
+        }
+        List<HouseAvgTotalPriceDTO> rList = new ArrayList<>();
+        for (HouseAvgTotalPriceDO item : list) {
+            BigDecimal bg = new BigDecimal(item.getHouseAvgTotalPrice());
+            double num = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+            rList.add(new HouseAvgTotalPriceDTO(item.getHouseDistrict(), num));
+        }
+        return rList;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<HouseAvgUnitPriceDTO> findAvgUnitPrice(String district, Double price) {
+        Double totalPrice = Optional.ofNullable(price).filter(i -> i > 0).orElse(DEFAULT_PRICE);
+        List<HouseAvgUnitPriceDO> list;
+        if (StringUtils.isEmpty(district)) {
+            list = houseRepository.findAvgUnitPrice(totalPrice);
+        } else {
+            list = houseRepository.findDistrictAvgUnitPrice(district, totalPrice);
+        }
+        List<HouseAvgUnitPriceDTO> rList = new ArrayList<>();
+        for (HouseAvgUnitPriceDO item : list) {
+            // HouseAvgUnitPriceDTO AllArgsConstructor
+            rList.add(new HouseAvgUnitPriceDTO(item.getHouseDistrict(), Math.ceil(item.getHouseAvgUnitPrice())));
+        }
+        return rList;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctCertificate() {
+        return houseRepository.findDistinctCertificate();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctCommunityName(String district, Integer limit) {
+        Integer size = Optional.ofNullable(limit).filter(i -> i > 0).orElse(DEFAULT_SIZE);
+        Pageable pageable = PageRequest.of(DEFAULT_PAGE, size);
+        if (StringUtils.isEmpty(district)) {
+            return houseRepository.findDistinctCommunityName(pageable);
+        }
+        return houseRepository.findDistinctCommunityName(district, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<HouseCountDTO> findCount(String district) {
+        ConvertUtil<HouseCountDO, HouseCountDTO> convertUtil = new ConvertUtil<>();
+        if (StringUtils.isEmpty(district)) {
+            return convertUtil.convert(houseRepository.findCount(), HouseCountDTO.class);
+        } else {
+            return convertUtil.convert(houseRepository.findDistrictCount(district), HouseCountDTO.class);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctDecoration() {
+        return houseRepository.findDistinctDecoration();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctDirection() {
+        return houseRepository.findDistinctDirection();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctDistrict() {
+        return houseRepository.findDistinctDistrict();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctFloor() {
+        return houseRepository.findDistinctFloor();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctHasElevator() {
+        return houseRepository.findDistinctHasElevator();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctIsUnique() {
+        return houseRepository.findDistinctIsUnique();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctPropertyOwnership() {
+        return houseRepository.findDistinctPropertyOwnership();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctTradingOwnership() {
+        return houseRepository.findDistinctTradingOwnership();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctTradingSituation() {
+        return houseRepository.findDistinctTradingSituation();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctType() {
+        return houseRepository.findDistinctType();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<String> findDistinctUsage() {
+        return houseRepository.findDistinctUsage();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<House> findByHouseId(BigInteger id) {
+        Assert.notNull(id, "The given id must not be null!");
+        return houseRepository.findById(id);
+    }
+}
