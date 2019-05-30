@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>house-common</artifactId>
-    <version>1.0.0-Release</version>
+    <artifactId>home-house-common</artifactId>
+    <version>1.0.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>home-house-common</name>
@@ -14,12 +14,15 @@
 
     <parent>
         <groupId>cn.sh.lz.cloud</groupId>
-        <artifactId>house</artifactId>
-        <version>1.0.0-Release</version>
+        <artifactId>home-house</artifactId>
+        <version>1.0.0.RELEASE</version>
     </parent>
 
     <properties>
         <swagger-annotations.version>1.5.13</swagger-annotations.version>
+        <spring-beans.version>5.0.10.RELEASE</spring-beans.version>
+        <spring-data-commons.version>2.0.11.RELEASE</spring-data-commons.version>
+        <hibernate-jpa-2.1-api.version>1.0.2.Final</hibernate-jpa-2.1-api.version>
     </properties>
 
     <dependencies>
@@ -46,21 +49,21 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>5.0.10.RELEASE</version>
+            <version>${spring-beans.version}</version>
         </dependency>
 
         <!--Spring Data Commons-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
-            <version>2.0.11.RELEASE</version>
+            <version>${spring-data-commons.version}</version>
         </dependency>
 
         <!--Hibernate Jpa-->
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>1.0.2.Final</version>
+            <version>${hibernate-jpa-2.1-api.version}</version>
         </dependency>
     </dependencies>
 </project>

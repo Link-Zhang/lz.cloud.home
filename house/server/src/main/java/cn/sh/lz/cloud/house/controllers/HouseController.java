@@ -24,6 +24,58 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/***
+ *                    _ooOoo_
+ *                   o8888888o
+ *                   88" . "88
+ *                   (| -_- |)
+ *                    O\ = /O
+ *                ____/`---'\____
+ *              .   ' \\| |// `.
+ *               / \\||| : |||// \
+ *             / _||||| -:- |||||- \
+ *               | | \\\ - /// | |
+ *             | \_| ''\---/'' | |
+ *              \ .-\__ `-` ___/-. /
+ *           ___`. .' /--.--\ `. . __
+ *        ."" '< `.___\_<|>_/___.' >'"".
+ *       | | : `- \`.;`\ _ /`;.`/ - ` : | |
+ *         \ \ `-. \_ __\ /__ _/ .-` / /
+ * ======`-.____`-.___\_____/___.-`____.-'======
+ *                    `=---='
+ *
+ * .............................................
+ *          佛祖保佑             永无BUG
+ */
+
+/***
+ *  佛曰:
+ *          写字楼里写字间，写字间里程序员；
+ *          程序人员写程序，又拿程序换酒钱。
+ *          酒醒只在网上坐，酒醉还来网下眠；
+ *          酒醉酒醒日复日，网上网下年复年。
+ *          但愿老死电脑间，不愿鞠躬老板前；
+ *          奔驰宝马贵者趣，公交自行程序员。
+ *          别人笑我忒疯癫，我笑自己命太贱；
+ *          不见满街漂亮妹，哪个归得程序员？
+ */
+
+/***
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+ * │Esc│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│| \│~ `│
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤
+ * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ Del │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
+ * │ Ctrl │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Return │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┬────┤
+ * │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│Shift│ Fn │
+ * └─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┴────┘
+ *       │ Alt│ ⌘ ◇│                       │◇ ⌘ │ Alt│
+ *       └────┴────┴───────────────────────┴────┴────┘
+ *
+ *                  Happy Hacking Key Board
+ */
+
 /**
  * Created by Link at 15:22 on 4/11/19.
  */
@@ -37,24 +89,33 @@ public class HouseController {
     @Autowired
     private HouseService houseService;
 
+    @ApiOperation(value = "房屋微服务测试", notes = "房屋微服务测试")
+    @GetMapping(path = "/hello", produces = "application/json")
+    public @ResponseBody
+    String hello() {
+        return "[\"Hello\", \"Link\", \"Zhang\"]";
+    }
+
     @ApiOperation(value = "获取房屋", notes = "获取房屋(默认10条)")
     @GetMapping(path = "/", produces = "application/json")
     public @ResponseBody
     HouseOutput find(HouseInput houseInput) {
         Integer size = Optional.ofNullable(houseInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
         Sort sort = new Sort(houseInput.getSortDirection(), houseInput.getSortProperties());
-        ConvertUtil<HouseVO, HouseDTO> convertUtil = new ConvertUtil<>();
-        HouseDTO houseDTO = convertUtil.convert(houseInput.getHouseVO(), HouseDTO.class);
+        ConvertUtil<HouseFindVO, HouseDTO> convertUtilIn = new ConvertUtil<>();
+        HouseDTO houseDTO = convertUtilIn.convert(houseInput.getHouseFindVO(), HouseDTO.class);
         Page<House> housePage = houseService.findAllPaginated(houseDTO, PageRequest.of(houseInput.getPage(), size, sort));
-        return new HouseOutput(housePage.getContent());
+        ConvertUtil<House, HouseVO> convertUtilOut = new ConvertUtil<>();
+        List<HouseVO> list = convertUtilOut.convert(housePage.getContent(), HouseVO.class);
+        return new HouseOutput(list);
     }
 
     @ApiOperation(value = "获取房屋平均总价", notes = "获取房屋平均总价")
     @GetMapping(path = "/avgTotalPrice", produces = "application/json")
     public @ResponseBody
     HouseAvgTotalPriceOutput findAvgTotalPrice(HouseAvgTotalPriceInput houseAvgTotalPriceInput) {
-        ConvertUtil<HouseAvgTotalPriceDTO, HouseAvgTotalPriceVO> convertUtil = new ConvertUtil<>();
         List<HouseAvgTotalPriceDTO> list = houseService.findAvgTotalPrice(houseAvgTotalPriceInput.getDistrict());
+        ConvertUtil<HouseAvgTotalPriceDTO, HouseAvgTotalPriceVO> convertUtil = new ConvertUtil<>();
         return new HouseAvgTotalPriceOutput(convertUtil.convert(list, HouseAvgTotalPriceVO.class));
     }
 
@@ -62,8 +123,8 @@ public class HouseController {
     @GetMapping(path = "/avgUnitPrice", produces = "application/json")
     public @ResponseBody
     HouseAvgUnitPriceOutput findAvgUnitPrice(HouseAvgUnitPriceInput houseAvgUnitPriceInput) {
-        ConvertUtil<HouseAvgUnitPriceDTO, HouseAvgUnitPriceVO> convertUtil = new ConvertUtil<>();
         List<HouseAvgUnitPriceDTO> list = houseService.findAvgUnitPrice(houseAvgUnitPriceInput.getDistrict(), houseAvgUnitPriceInput.getPrice());
+        ConvertUtil<HouseAvgUnitPriceDTO, HouseAvgUnitPriceVO> convertUtil = new ConvertUtil<>();
         return new HouseAvgUnitPriceOutput(convertUtil.convert(list, HouseAvgUnitPriceVO.class));
     }
 
@@ -87,8 +148,8 @@ public class HouseController {
     @GetMapping(path = "/count", produces = "application/json")
     public @ResponseBody
     HouseCountOutput findCount(HouseCountInput houseCountInput) {
-        ConvertUtil<HouseCountDTO, HouseCountVO> convertUtil = new ConvertUtil<>();
         List<HouseCountDTO> list = houseService.findCount(houseCountInput.getDistrict());
+        ConvertUtil<HouseCountDTO, HouseCountVO> convertUtil = new ConvertUtil<>();
         return new HouseCountOutput(convertUtil.convert(list, HouseCountVO.class));
     }
 
@@ -197,8 +258,14 @@ public class HouseController {
     @ApiOperation(value = "获取指定ID的房屋", notes = "获取指定ID的房屋")
     @GetMapping(path = "/{id}", produces = "application/json")
     public @ResponseBody
-    HouseByIdOutput findById(HouseByIdInput houseByIdInput) {
-        Optional<House> optional = houseService.findByHouseId(houseByIdInput.getId());
-        return optional.map(HouseByIdOutput::new).orElseGet(() -> new HouseByIdOutput(new House()));
+    HouseByIdOutput findById(@PathVariable(value = "id") BigInteger id) {
+        Optional<House> optional = houseService.findByHouseId(id);
+        ConvertUtil<House, HouseVO> convertUtil = new ConvertUtil<>();
+        if (optional.isPresent()) {
+            return new HouseByIdOutput(convertUtil.convert(optional.get(), HouseVO.class));
+        } else {
+            HouseVO houseVO = new HouseVO();
+            return new HouseByIdOutput(houseVO);
+        }
     }
 }

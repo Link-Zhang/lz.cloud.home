@@ -29,6 +29,58 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/***
+ *                    _ooOoo_
+ *                   o8888888o
+ *                   88" . "88
+ *                   (| -_- |)
+ *                    O\ = /O
+ *                ____/`---'\____
+ *              .   ' \\| |// `.
+ *               / \\||| : |||// \
+ *             / _||||| -:- |||||- \
+ *               | | \\\ - /// | |
+ *             | \_| ''\---/'' | |
+ *              \ .-\__ `-` ___/-. /
+ *           ___`. .' /--.--\ `. . __
+ *        ."" '< `.___\_<|>_/___.' >'"".
+ *       | | : `- \`.;`\ _ /`;.`/ - ` : | |
+ *         \ \ `-. \_ __\ /__ _/ .-` / /
+ * ======`-.____`-.___\_____/___.-`____.-'======
+ *                    `=---='
+ *
+ * .............................................
+ *          佛祖保佑             永无BUG
+ */
+
+/***
+ *  佛曰:
+ *          写字楼里写字间，写字间里程序员；
+ *          程序人员写程序，又拿程序换酒钱。
+ *          酒醒只在网上坐，酒醉还来网下眠；
+ *          酒醉酒醒日复日，网上网下年复年。
+ *          但愿老死电脑间，不愿鞠躬老板前；
+ *          奔驰宝马贵者趣，公交自行程序员。
+ *          别人笑我忒疯癫，我笑自己命太贱；
+ *          不见满街漂亮妹，哪个归得程序员？
+ */
+
+/***
+ * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+ * │Esc│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│| \│~ `│
+ * ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┤
+ * │ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ Del │
+ * ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤
+ * │ Ctrl │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Return │
+ * ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───┬────┤
+ * │ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│Shift│ Fn │
+ * └─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┴────┘
+ *       │ Alt│ ⌘ ◇│                       │◇ ⌘ │ Alt│
+ *       └────┴────┴───────────────────────┴────┴────┘
+ *
+ *                  Happy Hacking Key Board
+ */
+
 /**
  * Created by Link at 16:48 on 4/11/19.
  */
@@ -154,13 +206,15 @@ public class HouseServiceImpl implements HouseService {
         if (StringUtils.isEmpty(district)) {
             list = houseRepository.findAvgTotalPrice();
         } else {
-            list = houseRepository.findDistrictAvgTotalPrice(district);
+            list = houseRepository.findDistrictAvgTotalPrice("%" + district.trim() + "%");
         }
         List<HouseAvgTotalPriceDTO> rList = new ArrayList<>();
         for (HouseAvgTotalPriceDO item : list) {
-            BigDecimal bg = new BigDecimal(item.getHouseAvgTotalPrice());
-            double num = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-            rList.add(new HouseAvgTotalPriceDTO(item.getHouseDistrict(), num));
+            if (Optional.ofNullable(item.getHouseDistrict()).isPresent() && Optional.ofNullable(item.getHouseAvgTotalPrice()).isPresent()) {
+                BigDecimal bg = new BigDecimal(item.getHouseAvgTotalPrice());
+                double num = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+                rList.add(new HouseAvgTotalPriceDTO(item.getHouseDistrict(), num));
+            }
         }
         return rList;
     }
@@ -173,12 +227,13 @@ public class HouseServiceImpl implements HouseService {
         if (StringUtils.isEmpty(district)) {
             list = houseRepository.findAvgUnitPrice(totalPrice);
         } else {
-            list = houseRepository.findDistrictAvgUnitPrice(district, totalPrice);
+            list = houseRepository.findDistrictAvgUnitPrice("%" + district.trim() + "%", totalPrice);
         }
         List<HouseAvgUnitPriceDTO> rList = new ArrayList<>();
         for (HouseAvgUnitPriceDO item : list) {
-            // HouseAvgUnitPriceDTO AllArgsConstructor
-            rList.add(new HouseAvgUnitPriceDTO(item.getHouseDistrict(), Math.ceil(item.getHouseAvgUnitPrice())));
+            if (Optional.ofNullable(item.getHouseDistrict()).isPresent() && Optional.ofNullable(item.getHouseAvgUnitPrice()).isPresent()) {
+                rList.add(new HouseAvgUnitPriceDTO(item.getHouseDistrict(), Math.ceil(item.getHouseAvgUnitPrice())));
+            }
         }
         return rList;
     }
@@ -196,8 +251,9 @@ public class HouseServiceImpl implements HouseService {
         Pageable pageable = PageRequest.of(DEFAULT_PAGE, size);
         if (StringUtils.isEmpty(district)) {
             return houseRepository.findDistinctCommunityName(pageable);
+        } else {
+            return houseRepository.findDistinctCommunityName("%" + district.trim() + "%", pageable);
         }
-        return houseRepository.findDistinctCommunityName(district, pageable);
     }
 
     @Transactional(readOnly = true)
@@ -207,7 +263,14 @@ public class HouseServiceImpl implements HouseService {
         if (StringUtils.isEmpty(district)) {
             return convertUtil.convert(houseRepository.findCount(), HouseCountDTO.class);
         } else {
-            return convertUtil.convert(houseRepository.findDistrictCount(district), HouseCountDTO.class);
+            List<HouseCountDO> houseCountDOList = houseRepository.findDistrictCount("%" + district.trim() + "%");
+            List<HouseCountDTO> list = new ArrayList<>();
+            for (HouseCountDO houseCountDO : houseCountDOList) {
+                if (Optional.ofNullable(houseCountDO.getHouseDistrict()).isPresent()) {
+                    list.add(convertUtil.convert(houseCountDO, HouseCountDTO.class));
+                }
+            }
+            return list;
         }
     }
 

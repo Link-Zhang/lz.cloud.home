@@ -5,17 +5,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>home-community</artifactId>
-    <version>1.0.0-Release</version>
-    <packaging>pom</packaging>
+    <artifactId>home-statistic-client</artifactId>
+    <version>1.0.0.RELEASE</version>
+    <packaging>jar</packaging>
 
-    <name>home-community</name>
-    <description>Link Zhang's Spring Cloud Project Home Community</description>
+    <name>home-statistic-client</name>
+    <description>Link Zhang's Spring Cloud Project Home Statistic Client</description>
 
     <parent>
         <groupId>cn.sh.lz.cloud</groupId>
-        <artifactId>home</artifactId>
-        <version>1.0.0-Release</version>
+        <artifactId>home-statistic</artifactId>
+        <version>1.0.0.RELEASE</version>
     </parent>
 
     <properties>
@@ -25,4 +25,5 @@
     <dependencies>
 
     </dependencies>
+
 </project>

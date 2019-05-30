@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>house-server</artifactId>
-    <version>1.0.0-Release</version>
+    <artifactId>home-house-server</artifactId>
+    <version>1.0.0.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>home-house-server</name>
@@ -14,13 +14,13 @@
 
     <parent>
         <groupId>cn.sh.lz.cloud</groupId>
-        <artifactId>house</artifactId>
-        <version>1.0.0-Release</version>
+        <artifactId>home-house</artifactId>
+        <version>1.0.0.RELEASE</version>
     </parent>
 
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
-        <house-common.version>1.0.0-Release</house-common.version>
+        <home-house-common.version>1.0.0.RELEASE</home-house-common.version>
     </properties>
 
     <dependencies>
@@ -29,7 +29,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        
+
         <!--Spring Cloud Consul-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -83,14 +83,25 @@
         <!--House Common-->
         <dependency>
             <groupId>cn.sh.lz.cloud</groupId>
-            <artifactId>house-common</artifactId>
-            <version>${house-common.version}</version>
+            <artifactId>home-house-common</artifactId>
+            <version>${home-house-common.version}</version>
         </dependency>
 
         <!--MySQL Connector Java-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--Spring Test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
     </dependencies>
@@ -100,6 +111,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

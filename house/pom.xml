@@ -5,8 +5,8 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>house</artifactId>
-    <version>1.0.0-Release</version>
+    <artifactId>home-house</artifactId>
+    <version>1.0.0.RELEASE</version>
     <modules>
         <module>client</module>
         <module>common</module>
@@ -20,7 +20,7 @@
     <parent>
         <groupId>cn.sh.lz.cloud</groupId>
         <artifactId>home</artifactId>
-        <version>1.0.0-Release</version>
+        <version>1.0.0.RELEASE</version>
     </parent>
 
     <properties>

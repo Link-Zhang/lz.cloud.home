@@ -1,0 +1,26 @@
+server:
+  port: 2141
+management:
+  server:
+    port: 2141
+    address: 127.0.0.1
+  endpoints:
+    web:
+      exposure:
+        include: health
+spring:
+  application:
+    name: history
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        serviceName: ${spring.application.name}
+        tags: version=1.0,author=linkzhang
+        instance-id: ${spring.application.name}:${spring.cloud.client.ipaddress}:${server.port}
+#feign:
+#  hystrix:
+#    enabled: true

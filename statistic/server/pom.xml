@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>home-statistic-server</artifactId>
+    <version>1.0.0.RELEASE</version>
+    <packaging>jar</packaging>
+
+    <name>home-statistic-server</name>
+    <description>Link Zhang's Spring Cloud Project Home Statistic Server</description>
+
+    <parent>
+        <groupId>cn.sh.lz.cloud</groupId>
+        <artifactId>home-statistic</artifactId>
+        <version>1.0.0.RELEASE</version>
+    </parent>
+
+    <properties>
+
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+</project>
