@@ -66,7 +66,7 @@ public class HouseFindVO {
     private String houseDistrict;
 
     @JsonProperty("communityName")
-    @ApiModelProperty(notes = "小区名称")
+    @ApiModelProperty(notes = "社区名称")
     private String houseCommunityName;
 
     @JsonProperty("usage")

@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,17 +86,23 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/api/v1/history")
 @Api(value = "历史微服务", consumes = "application/json")
 public class HistoryController {
-    @Autowired
-    private HistoryService historyService;
-
     @Value("${cn.sh.lz.cloud.history.default.size}")
     private Integer DEFAULT_SIZE;
+
+    @Value("${spring.application.name}")
+    private String springApplicationName;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private HistoryService historyService;
 
     @ApiOperation(value = "历史微服务测试", notes = "历史微服务测试")
     @GetMapping(path = "/hello", produces = "application/json")
     public @ResponseBody
     String hello() {
-        return "[\"Hello\", \"Link\", \"Zhang\"]";
+        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
     }
 
     @ApiOperation(value = "获取历史价格", notes = "获取历史价格(默认10条)")

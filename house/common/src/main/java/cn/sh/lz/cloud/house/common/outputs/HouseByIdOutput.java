@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /***
  *                    _ooOoo_
@@ -62,6 +63,7 @@ import lombok.Data;
  * Created by Link at 16:36 on 4/12/19.
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class HouseByIdOutput {
     @JsonProperty("houseVO")

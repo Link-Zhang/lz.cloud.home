@@ -1,9 +1,9 @@
 server:
-  port: 2140
+  port: ${server-port:2140}
 management:
   server:
-    port: 2140
-    address: 127.0.0.1
+    port: ${server-port:2140}
+    address: ${server-address:127.0.0.1}
   endpoints:
     web:
       exposure:

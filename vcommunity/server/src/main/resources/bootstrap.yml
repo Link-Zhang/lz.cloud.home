@@ -1,0 +1,26 @@
+server:
+  port: ${server-port:2142}
+management:
+  server:
+    port: ${server-port:2142}
+    address: ${server-address:127.0.0.1}
+  endpoints:
+    web:
+      exposure:
+        include: health
+spring:
+  application:
+    name: vcommunity
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        serviceName: ${spring.application.name}
+        tags: version=1.0,author=linkzhang
+        instance-id: ${spring.application.name}:${spring.cloud.client.ipaddress}:${server.port}
+feign:
+  hystrix:
+    enabled: true

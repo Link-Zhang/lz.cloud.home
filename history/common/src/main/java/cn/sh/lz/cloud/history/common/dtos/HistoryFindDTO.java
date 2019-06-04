@@ -1,9 +1,5 @@
 package cn.sh.lz.cloud.history.common.dtos;
 
-import lombok.Data;
-
-import java.math.BigInteger;
-
 /***
  *                    _ooOoo_
  *                   o8888888o
@@ -55,6 +51,10 @@ import java.math.BigInteger;
  *
  *                  Happy Hacking Key Board
  */
+
+import lombok.Data;
+
+import java.math.BigInteger;
 
 /**
  * Created by Link at 15:15 on 5/20/19.

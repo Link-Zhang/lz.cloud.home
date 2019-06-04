@@ -1,9 +1,9 @@
 server:
-  port: 2141
+  port: ${server-port:2141}
 management:
   server:
-    port: 2141
-    address: 127.0.0.1
+    port: ${server-port:2141}
+    address: ${server-address:127.0.0.1}
   endpoints:
     web:
       exposure:
@@ -21,6 +21,6 @@ spring:
         serviceName: ${spring.application.name}
         tags: version=1.0,author=linkzhang
         instance-id: ${spring.application.name}:${spring.cloud.client.ipaddress}:${server.port}
-#feign:
-#  hystrix:
-#    enabled: true
+feign:
+  hystrix:
+    enabled: true

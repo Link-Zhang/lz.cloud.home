@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
@@ -86,14 +87,20 @@ public class HouseController {
     @Value("${cn.sh.lz.cloud.house.default.size}")
     private Integer DEFAULT_SIZE;
 
+    @Value("${spring.application.name}")
+    private String springApplicationName;
+
     @Autowired
     private HouseService houseService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @ApiOperation(value = "房屋微服务测试", notes = "房屋微服务测试")
     @GetMapping(path = "/hello", produces = "application/json")
     public @ResponseBody
     String hello() {
-        return "[\"Hello\", \"Link\", \"Zhang\"]";
+        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
     }
 
     @ApiOperation(value = "获取房屋", notes = "获取房屋(默认10条)")

@@ -21,6 +21,7 @@
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
         <home-house-common.version>1.0.0.RELEASE</home-house-common.version>
+        <home-house-client.version>1.0.0.RELEASE</home-house-client.version>
     </properties>
 
     <dependencies>
@@ -80,13 +81,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-        <!--House Common-->
-        <dependency>
-            <groupId>cn.sh.lz.cloud</groupId>
-            <artifactId>home-house-common</artifactId>
-            <version>${home-house-common.version}</version>
-        </dependency>
-
         <!--MySQL Connector Java-->
         <dependency>
             <groupId>mysql</groupId>
@@ -104,6 +98,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
+        <!--Home House Common-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-house-common</artifactId>
+            <version>${home-house-common.version}</version>
+        </dependency>
+
+        <!--Home House Client-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-house-client</artifactId>
+            <version>${home-house-client.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

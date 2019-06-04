@@ -19,11 +19,52 @@
     </parent>
 
     <properties>
-
+        <swagger-annotations.version>1.5.13</swagger-annotations.version>
+        <spring-beans.version>5.0.10.RELEASE</spring-beans.version>
+        <spring-data-commons.version>2.0.11.RELEASE</spring-data-commons.version>
+        <hibernate-jpa-2.1-api.version>1.0.2.Final</hibernate-jpa-2.1-api.version>
     </properties>
 
     <dependencies>
+        <!--Lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
+        <!--Jackson Annotations-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <!--Swagger Annotations-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger-annotations.version}</version>
+        </dependency>
+
+        <!--Spring Beans-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring-beans.version}</version>
+        </dependency>
+
+        <!--Spring Data Commons-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <version>${spring-data-commons.version}</version>
+        </dependency>
+
+        <!--Hibernate Jpa-->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${hibernate-jpa-2.1-api.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
