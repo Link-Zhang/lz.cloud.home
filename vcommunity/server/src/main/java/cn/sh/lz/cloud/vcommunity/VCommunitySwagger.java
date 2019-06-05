@@ -94,7 +94,7 @@ public class VCommunitySwagger {
                 .groupName("server-api")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.vcommunity.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.vcommunity.feign.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }

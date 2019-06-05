@@ -1,4 +1,4 @@
-package cn.sh.lz.cloud.vcommunity.clients;
+package cn.sh.lz.cloud.vcommunity.feign.controller;
 
 /***
  *                    _ooOoo_
@@ -52,56 +52,63 @@ package cn.sh.lz.cloud.vcommunity.clients;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.vcommunity.clients.VCommunityClient;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
+import java.util.List;
 
 /**
- * Created by Link at 09:24 on 6/4/19.
+ * Created by Link at 09:31 on 6/4/19.
  */
-@FeignClient(name = "vcommunity", fallback = VCommunityClient.VCommunityClientFallback.class)
-public interface VCommunityClient {
-    @GetMapping(value = "/api/v1/vcommunity/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    VCommunityOutput findAll(VCommunityInput vCommunityInput);
+@RequestMapping("/feign/vcommunity")
+@RestController
+public class FeignController {
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
-    @GetMapping(value = "/api/v1/vcommunity/count", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput);
+    @Autowired
+    private VCommunityClient vcommunityClient;
 
-    @GetMapping(value = "/api/v1/vcommunity/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    String hello();
+    @ApiOperation(value = "社区", notes = "获取社区(默认10条)")
+    @GetMapping(path = "/")
+    public VCommunityOutput findAll(VCommunityInput vCommunityInput) {
+        return vcommunityClient.findAll(vCommunityInput);
+    }
 
-    @GetMapping(value = "/api/v1/vcommunity/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    VCommunityByIdOutput findById(@PathVariable("id") BigInteger id);
+    @ApiOperation(value = "各辖区社区数量", notes = "获取各辖区社区数量")
+    @GetMapping(path = "/count")
+    public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
+        return vcommunityClient.findCount(vCommunityCountInput);
+    }
 
-    @Component
-    static class VCommunityClientFallback implements VCommunityClient {
-        @Override
-        public VCommunityOutput findAll(VCommunityInput vCommunityInput) {
-            return null;
-        }
+    @ApiOperation(value = "社区微服务测试", notes = "进行社区微服务测试")
+    @GetMapping(path = "/hello")
+    public String hello() {
+        return vcommunityClient.hello();
+    }
 
-        @Override
-        public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
-            return null;
-        }
+    @ApiOperation(value = "社区微服务实例", notes = "获取社区微服务实例")
+    @GetMapping(path = "/instances")
+    public List<ServiceInstance> instances() {
+        return discoveryClient.getInstances("vcommunity");
+    }
 
-        @Override
-        public String hello() {
-            return "服务降级!";
-        }
-
-        @Override
-        public VCommunityByIdOutput findById(BigInteger id) {
-            return null;
-        }
+    @ApiOperation(value = "指定社区", notes = "获取指定ID的社区")
+    @GetMapping(path = "/{id}")
+    public VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
+        return vcommunityClient.findById(id);
     }
 }

@@ -73,6 +73,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,15 +100,8 @@ public class VCommunityController {
     @Autowired
     protected HttpServletRequest request;
 
-    @ApiOperation(value = "社区微服务测试", notes = "社区微服务测试")
-    @GetMapping(path = "/hello", produces = "application/json")
-    public @ResponseBody
-    String hello() {
-        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
-    }
-
     @ApiOperation(value = "获取社区", notes = "获取社区(默认10条)")
-    @GetMapping(path = "/", produces = "application/json")
+    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     VCommunityOutput findAll(VCommunityInput vCommunityInput) {
         Integer size = Optional.ofNullable(vCommunityInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
@@ -122,16 +116,23 @@ public class VCommunityController {
     }
 
     @ApiOperation(value = "获取各区社区数量", notes = "获取各区社区数量")
-    @PostMapping(path = "/count", produces = "application/json")
+    @GetMapping(path = "/count", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
-    VCommunityCountOutput findCount(@RequestBody(required = false) VCommunityCountInput vCommunityCountInput) {
+    VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
         List<VCommunityCountDTO> list = vCommunityService.findCount(vCommunityCountInput.getDistrict());
         ConvertUtil<VCommunityCountDTO, VCommunityCountVO> convertUtil = new ConvertUtil<>();
         return new VCommunityCountOutput(convertUtil.convert(list, VCommunityCountVO.class));
     }
 
+    @ApiOperation(value = "社区微服务测试", notes = "社区微服务测试")
+    @GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody
+    String hello() {
+        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
+    }
+
     @ApiOperation(value = "获取指定ID的社区", notes = "获取指定ID的社区")
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
         ConvertUtil<VCommunityDTO, VCommunityVO> convertUtil = new ConvertUtil<>();

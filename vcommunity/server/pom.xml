@@ -23,6 +23,8 @@
         <home-vcommunity-client.version>1.0.0.RELEASE</home-vcommunity-client.version>
         <home-vcommunity-common.version>1.0.0.RELEASE</home-vcommunity-common.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
+        <httpclient.version.version>4.5.8</httpclient.version.version>
+        <fastjson.version>1.2.58</fastjson.version>
     </properties>
 
     <dependencies>
@@ -113,6 +115,27 @@
             <groupId>cn.sh.lz.cloud</groupId>
             <artifactId>home-vcommunity-common</artifactId>
             <version>${home-vcommunity-common.version}</version>
+        </dependency>
+
+        <!--Apache Http Client-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <!--Feign Http Client-->
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>${feign-httpclient.version}</version>
+        </dependency>
+
+        <!--Alibaba Fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 
