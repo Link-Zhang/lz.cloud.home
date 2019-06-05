@@ -52,35 +52,47 @@ package cn.sh.lz.cloud.vcommunity.clients;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
+import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 
 /**
  * Created by Link at 09:24 on 6/4/19.
  */
-@FeignClient(name = "vcommunity", fallback = VCommunityClient.VCommunityClientFallback.class)
+@FeignClient(name = "vcommunity")//, fallback = VCommunityClient.VCommunityClientFallback.class)
 public interface VCommunityClient {
+    @PostMapping(value = "/api/v1/vcommunity/count")//, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody
+    VCommunityCountOutput findCount(@RequestBody(required = false) VCommunityCountInput vCommunityCountInput);
+
     @GetMapping(value = "/api/v1/vcommunity/hello")
     String hello();
 
     @GetMapping(value = "/api/v1/vcommunity/{id}")
     VCommunityByIdOutput findById(@PathVariable("id") BigInteger id);
 
-    @Component
-    static class VCommunityClientFallback implements VCommunityClient {
-        @Override
-        public String hello() {
-            return "服务降级!";
-        }
-
-        @Override
-        public VCommunityByIdOutput findById(BigInteger id) {
-            return null;
-        }
-    }
+//    @Component
+//    static class VCommunityClientFallback implements VCommunityClient {
+//        @Override
+//        public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
+//            System.out.println("-----------------------Facllback Called-------------------------");
+//            System.out.println(vCommunityCountInput.getDistrict());
+//            System.out.println("-----------------------Facllback Called-------------------------");
+//            return null;
+//        }
+//
+//        @Override
+//        public String hello() {
+//            return "服务降级!";
+//        }
+//
+//        @Override
+//        public VCommunityByIdOutput findById(BigInteger id) {
+//            return null;
+//        }
+//    }
 }

@@ -54,14 +54,18 @@ package cn.sh.lz.cloud.vcommunity.common.inputs;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by Link at 09:34 on 5/31/19.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class VCommunityCountInput {
     @JsonProperty("district")
-    @ApiModelProperty(notes = "市辖区")
+    @ApiModelProperty(notes = "市辖区",example = "长宁")
     private String district;
 }

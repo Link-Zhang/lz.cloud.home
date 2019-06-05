@@ -53,7 +53,9 @@ package cn.sh.lz.cloud.vcommunity.controllers;
  */
 
 import cn.sh.lz.cloud.vcommunity.clients.VCommunityClient;
+import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
+import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -74,17 +76,22 @@ public class FeignController {
     @Autowired
     private VCommunityClient vcommunityClient;
 
-    @GetMapping(path = "/instances")
-    public List<ServiceInstance> instances() {
-        return discoveryClient.getInstances("vcommunity");
+    @PostMapping(path = "/count")
+    public @ResponseBody
+    VCommunityCountOutput findCount(@RequestBody(required = false) VCommunityCountInput vCommunityCountInput) {
+        System.out.println(vCommunityCountInput.getDistrict());
+        return vcommunityClient.findCount(vCommunityCountInput);
     }
-
 
     @GetMapping(path = "/hello")
     public String hello() {
         return vcommunityClient.hello();
     }
 
+    @GetMapping(path = "/instances")
+    public List<ServiceInstance> instances() {
+        return discoveryClient.getInstances("vcommunity");
+    }
 
     @GetMapping(path = "/{id}")
     public VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {

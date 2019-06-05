@@ -122,9 +122,9 @@ public class VCommunityController {
     }
 
     @ApiOperation(value = "获取各区社区数量", notes = "获取各区社区数量")
-    @GetMapping(path = "/count", produces = "application/json")
+    @PostMapping(path = "/count", produces = "application/json")
     public @ResponseBody
-    VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
+    VCommunityCountOutput findCount(@RequestBody(required = false) VCommunityCountInput vCommunityCountInput) {
         List<VCommunityCountDTO> list = vCommunityService.findCount(vCommunityCountInput.getDistrict());
         ConvertUtil<VCommunityCountDTO, VCommunityCountVO> convertUtil = new ConvertUtil<>();
         return new VCommunityCountOutput(convertUtil.convert(list, VCommunityCountVO.class));
