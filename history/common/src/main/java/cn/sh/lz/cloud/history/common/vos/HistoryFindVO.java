@@ -63,11 +63,11 @@ import java.math.BigInteger;
  */
 @Data
 public class HistoryFindVO {
-    @JsonProperty("houseId")
+    @JsonProperty("historyHouseId")
     @ApiModelProperty(notes = "房屋ID")
     private BigInteger historyHouseId;
 
-    @JsonProperty("houseDistrict")
+    @JsonProperty("historyHouseDistrict")
     @ApiModelProperty(notes = "市辖区")
     private String historyHouseDistrict;
 

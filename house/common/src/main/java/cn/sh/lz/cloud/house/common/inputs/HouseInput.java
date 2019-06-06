@@ -63,7 +63,7 @@ import org.springframework.data.domain.Sort;
  */
 @Data
 public class HouseInput {
-    @ApiModelProperty(notes = "HouseFindVO")
+    @ApiModelProperty(notes = "houseFindVO")
     private HouseFindVO houseFindVO;
 
     @JsonProperty("page")

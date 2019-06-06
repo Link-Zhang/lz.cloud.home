@@ -1,4 +1,4 @@
-package cn.sh.lz.cloud.house.controllers;
+package cn.sh.lz.cloud.history.feign.controller;
 
 /***
  *                    _ooOoo_
@@ -52,35 +52,62 @@ package cn.sh.lz.cloud.house.controllers;
  *                  Happy Hacking Key Board
  */
 
-import cn.sh.lz.cloud.house.clients.HouseClient;
+import cn.sh.lz.cloud.history.clients.HistoryClient;
+import cn.sh.lz.cloud.history.common.inputs.HistoryHouseIdInput;
+import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
+import cn.sh.lz.cloud.history.common.outputs.HistoryHouseIdOutput;
+import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
- * Created by Link at 14:51 on 6/4/19.
+ * Created by Link at 14:05 on 6/4/19.
  */
-@RequestMapping("/feign/house")
+@RequestMapping("/feign/history")
 @RestController
 public class FeignController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
     @Autowired
-    private HouseClient houseClient;
+    private HistoryClient historyClient;
 
-    @GetMapping(value = "/instances")
-    public List<ServiceInstance> instances() {
-        return discoveryClient.getInstances("house");
+    @ApiOperation(value = "历史价格", notes = "获取历史价格(默认10条)")
+    @GetMapping(value = "/")
+    public HistoryOutput find(HistoryInput historyInput) {
+        return historyClient.find(historyInput);
     }
 
+    @ApiOperation(value = "历史微服务测试", notes = "进行历史微服务测试")
     @GetMapping(value = "/hello")
     public String hello() {
-        return houseClient.hello();
+        return historyClient.hello();
+    }
+
+    @ApiOperation(value = "房屋ID", notes = "获取历史价格表中的房屋ID(默认10条)")
+    @GetMapping(path = "/houseId")
+    public HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
+        return historyClient.findHouseId(historyHouseIdInput);
+    }
+
+    @ApiOperation(value = "历史微服务实例", notes = "获取历史微服务实例")
+    @GetMapping(value = "/instances")
+    public List<ServiceInstance> instances() {
+        return discoveryClient.getInstances("history");
+    }
+
+    @ApiOperation(value = "指定ID的历史价格", notes = "获取指定ID的历史价格")
+    @GetMapping(path = "/{id}")
+    public HistoryOutput findByHistoryId(@PathVariable BigInteger id) {
+        return historyClient.findByHistoryId(id);
     }
 }

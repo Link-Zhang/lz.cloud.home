@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,15 +99,8 @@ public class HistoryController {
     @Autowired
     private HistoryService historyService;
 
-    @ApiOperation(value = "历史微服务测试", notes = "历史微服务测试")
-    @GetMapping(path = "/hello", produces = "application/json")
-    public @ResponseBody
-    String hello() {
-        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
-    }
-
     @ApiOperation(value = "获取历史价格", notes = "获取历史价格(默认10条)")
-    @GetMapping(path = "/", produces = "application/json")
+    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     HistoryOutput find(HistoryInput historyInput) {
         Integer page = historyInput.getPage();
@@ -121,8 +115,15 @@ public class HistoryController {
         return new HistoryOutput(historyVOList);
     }
 
+    @ApiOperation(value = "历史微服务测试", notes = "历史微服务测试")
+    @GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody
+    String hello() {
+        return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
+    }
+
     @ApiOperation(value = "获取历史价格表中的房屋ID", notes = "获取历史价格表中的房屋ID(默认10条)")
-    @GetMapping(path = "/houseId", produces = "application/json")
+    @GetMapping(path = "/houseId", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
         Integer page = historyHouseIdInput.getPage();
@@ -138,7 +139,7 @@ public class HistoryController {
     }
 
     @ApiOperation(value = "获取指定ID的历史价格", notes = "获取指定ID的历史价格")
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
     HistoryOutput findByHistoryId(@PathVariable BigInteger id) {
         Optional<History> historyOptional = historyService.findByHistoryId(id);

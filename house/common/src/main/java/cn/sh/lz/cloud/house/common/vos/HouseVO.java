@@ -65,7 +65,7 @@ import java.math.BigInteger;
 @Data
 public class HouseVO {
     @JsonProperty("id")
-    @ApiModelProperty(notes = "房屋ID",example = "107000005011")
+    @ApiModelProperty(notes = "房屋ID", example = "107000005011")
     private BigInteger houseId;
 
     @JsonProperty("district")
@@ -77,7 +77,7 @@ public class HouseVO {
     private String houseCommunityName;
 
     @JsonProperty("usage")
-    @ApiModelProperty(notes = "房屋用途", position = 3,example = "普通住宅")
+    @ApiModelProperty(notes = "房屋用途", position = 3, example = "普通住宅")
     private String houseUsage;
 
     @JsonProperty("tradingSituation")

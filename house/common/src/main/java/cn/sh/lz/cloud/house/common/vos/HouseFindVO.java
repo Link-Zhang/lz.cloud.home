@@ -61,99 +61,99 @@ import lombok.Data;
  */
 @Data
 public class HouseFindVO {
-    @JsonProperty("district")
+    @JsonProperty("houseDistrict")
     @ApiModelProperty(notes = "市辖区")
     private String houseDistrict;
 
-    @JsonProperty("communityName")
+    @JsonProperty("houseCommunityName")
     @ApiModelProperty(notes = "社区名称")
     private String houseCommunityName;
 
-    @JsonProperty("usage")
+    @JsonProperty("houseUsage")
     @ApiModelProperty(notes = "房屋用途")
     private String houseUsage;
 
-    @JsonProperty("tradingSituation")
+    @JsonProperty("houseTradingSituation")
     @ApiModelProperty(notes = "交易情况")
     private String houseTradingSituation;
 
-    @JsonProperty("isUnique")
+    @JsonProperty("houseIsUnique")
     @ApiModelProperty(notes = "是否唯一")
     private String houseIsUnique;
 
-    @JsonProperty("leStructureArea")
+    @JsonProperty("houseLeStructureArea")
     @ApiModelProperty(notes = "最大建筑面积")
     private Double houseLeStructureArea;
 
-    @JsonProperty("geStructureArea")
+    @JsonProperty("houseGeStructureArea")
     @ApiModelProperty(notes = "最小建筑面积")
     private Double houseGeStructureArea;
 
-    @JsonProperty("leTotalPrice")
+    @JsonProperty("houseLeTotalPrice")
     @ApiModelProperty(notes = "最高房屋总价")
     private Double houseLeTotalPrice;
 
-    @JsonProperty("geTotalPrice")
+    @JsonProperty("houseGeTotalPrice")
     @ApiModelProperty(notes = "最低房屋总价")
     private Double houseGeTotalPrice;
 
-    @JsonProperty("leDownPayment")
+    @JsonProperty("houseLeDownPayment")
     @ApiModelProperty(notes = "最高房屋首付")
     private Long houseLeDownPayment;
 
-    @JsonProperty("geDownPayment")
+    @JsonProperty("houseGeDownPayment")
     @ApiModelProperty(notes = "最低房屋首付")
     private Long houseGeDownPayment;
 
-    @JsonProperty("leUnitPrice")
+    @JsonProperty("houseLeUnitPrice")
     @ApiModelProperty(notes = "最高房屋单价")
     private Long houseLeUnitPrice;
 
-    @JsonProperty("geUnitPrice")
+    @JsonProperty("houseGeUnitPrice")
     @ApiModelProperty(notes = "最低房屋单价")
     private Long houseGeUnitPrice;
 
-    @JsonProperty("type")
+    @JsonProperty("houseType")
     @ApiModelProperty(notes = "房屋户型")
     private String houseType;
 
-    @JsonProperty("floor")
+    @JsonProperty("houseFloor")
     @ApiModelProperty(notes = "房屋楼层")
     private String houseFloor;
 
-    @JsonProperty("direction")
+    @JsonProperty("houseDirection")
     @ApiModelProperty(notes = "房屋朝向")
     private String houseDirection;
 
-    @JsonProperty("decoration")
+    @JsonProperty("houseDecoration")
     @ApiModelProperty(notes = "装修情况")
     private String houseDecoration;
 
-    @JsonProperty("hasElevator")
+    @JsonProperty("houseHasElevator")
     @ApiModelProperty(notes = "配备电梯")
     private String houseHasElevator;
 
-    @JsonProperty("age")
+    @JsonProperty("houseAge")
     @ApiModelProperty(notes = "楼龄情况")
     private String houseAge;
 
-    @JsonProperty("tradingOwnership")
+    @JsonProperty("houseTradingOwnership")
     @ApiModelProperty(notes = "交易权属")
     private String houseTradingOwnership;
 
-    @JsonProperty("propertyOwnership")
+    @JsonProperty("housePropertyOwnership")
     @ApiModelProperty(notes = "产权所属")
     private String housePropertyOwnership;
 
-    @JsonProperty("mortgage")
+    @JsonProperty("houseMortgage")
     @ApiModelProperty(notes = "抵押情况")
     private String houseMortgage;
 
-    @JsonProperty("certificate")
+    @JsonProperty("houseCertificate")
     @ApiModelProperty(notes = "房本备件")
     private String houseCertificate;
 
-    @JsonProperty("communityId")
+    @JsonProperty("houseCommunityId")
     @ApiModelProperty(notes = "小区Id")
     private String houseCommunityId;
 }

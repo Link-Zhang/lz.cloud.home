@@ -68,7 +68,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryHouseIdOutput {
-    @JsonProperty("houseIdList")
+    @JsonProperty("historyHouseIdList")
     @ApiModelProperty(notes = "历史房屋ID列表", required = true)
     private List<BigInteger> historyHouseIdList;
 }

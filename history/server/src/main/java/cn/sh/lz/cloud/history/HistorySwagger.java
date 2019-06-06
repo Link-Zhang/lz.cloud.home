@@ -88,13 +88,17 @@ public class HistorySwagger {
         ArrayList<SecurityContext> securityContexts = newArrayList(SecurityContext.builder().securityReferences
                 (newArrayList(securityReference)).build());
 
+//        com.google.common.base.Predicate<RequestHandler> selector1 = RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.history.controllers");
+//        com.google.common.base.Predicate<RequestHandler> selector2 = RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.history.feign.controller");
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .securitySchemes(newArrayList(new BasicAuth("home")))
                 .securityContexts(securityContexts)
                 .groupName("server-api")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.history.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.history.feign.controller"))
+//                .apis(Predicates.or(selector1, selector2))
                 .paths(PathSelectors.any())
                 .build();
     }

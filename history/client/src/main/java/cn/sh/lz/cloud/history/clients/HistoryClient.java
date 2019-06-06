@@ -52,23 +52,55 @@ package cn.sh.lz.cloud.history.clients;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.history.common.inputs.HistoryHouseIdInput;
+import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
+import cn.sh.lz.cloud.history.common.outputs.HistoryHouseIdOutput;
+import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.math.BigInteger;
 
 /**
  * Created by Link at 13:53 on 6/4/19.
  */
 @FeignClient(name = "history", fallback = HistoryClient.HistoryClientFallback.class)
 public interface HistoryClient {
-    @GetMapping(value = "/api/v1/history/hello")
+    @GetMapping(value = "/api/v1/history/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    HistoryOutput find(HistoryInput historyInput);
+
+    @GetMapping(value = "/api/v1/history/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String hello();
+
+    @GetMapping(value = "/api/v1/history/houseId", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput);
+
+    @GetMapping(value = "/api/v1/history/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    HistoryOutput findByHistoryId(@PathVariable("id") BigInteger id);
 
     @Component
     static class HistoryClientFallback implements HistoryClient {
         @Override
+        public HistoryOutput find(HistoryInput historyInput) {
+            return null;
+        }
+
+        @Override
         public String hello() {
             return "服务降级!";
+        }
+
+        @Override
+        public HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
+            return null;
+        }
+
+        @Override
+        public HistoryOutput findByHistoryId(BigInteger id) {
+            return null;
         }
     }
 }

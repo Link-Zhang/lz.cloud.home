@@ -63,8 +63,8 @@ import org.springframework.data.domain.Sort;
  */
 @Data
 public class HouseIdInput {
-    @ApiModelProperty(notes = "idVO")
-    private HouseIdVO idVO;
+    @ApiModelProperty(notes = "houseIdVO")
+    private HouseIdVO houseIdVO;
 
     @JsonProperty("page")
     @ApiModelProperty(notes = "分页页数")

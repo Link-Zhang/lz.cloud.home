@@ -3,7 +3,9 @@ package cn.sh.lz.cloud.history.common.inputs;
 import cn.sh.lz.cloud.history.common.vos.HistoryFindVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Sort;
 
 /***
@@ -62,8 +64,10 @@ import org.springframework.data.domain.Sort;
  * Created by Link at 14:44 on 5/20/19.
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HistoryInput {
-    @ApiModelProperty(notes = "HistoryFindVO")
+    @ApiModelProperty(notes = "historyFindVO")
     private HistoryFindVO historyFindVO;
 
     @JsonProperty("page")

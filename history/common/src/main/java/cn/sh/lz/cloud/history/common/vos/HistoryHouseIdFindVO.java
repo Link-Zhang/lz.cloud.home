@@ -61,7 +61,7 @@ import lombok.Data;
  */
 @Data
 public class HistoryHouseIdFindVO {
-    @JsonProperty("houseDistrict")
+    @JsonProperty("historyHouseDistrict")
     @ApiModelProperty(notes = "市辖区")
     private String historyHouseDistrict;
 

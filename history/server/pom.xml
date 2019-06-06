@@ -20,8 +20,11 @@
 
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
-        <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
         <home-history-client.version>1.0.0.RELEASE</home-history-client.version>
+        <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
+        <feign-httpclient.version>8.18.0</feign-httpclient.version>
+        <httpclient.version.version>4.5.8</httpclient.version.version>
+        <fastjson.version>1.2.58</fastjson.version>
     </properties>
 
     <dependencies>
@@ -102,6 +105,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Home History Client-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-history-client</artifactId>
+            <version>${home-history-client.version}</version>
+        </dependency>
+
         <!--Home History Common-->
         <dependency>
             <groupId>cn.sh.lz.cloud</groupId>
@@ -109,11 +119,25 @@
             <version>${home-history-common.version}</version>
         </dependency>
 
-        <!--Home History Client-->
+        <!--Apache Http Client-->
         <dependency>
-            <groupId>cn.sh.lz.cloud</groupId>
-            <artifactId>home-history-client</artifactId>
-            <version>${home-history-client.version}</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+
+        <!--Feign Http Client-->
+        <dependency>
+            <groupId>com.netflix.feign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+            <version>${feign-httpclient.version}</version>
+        </dependency>
+
+        <!--Alibaba Fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 
