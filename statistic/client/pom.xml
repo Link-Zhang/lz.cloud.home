@@ -19,11 +19,28 @@
     </parent>
 
     <properties>
-
+        <home-statistic-common.version>1.0.0.RELEASE</home-statistic-common.version>
     </properties>
 
     <dependencies>
+        <!--Spring Cloud OpenFeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
+        <!--Spring Boot Web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--Home Statistic Commmon-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-statistic-common</artifactId>
+            <version>${home-statistic-common.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

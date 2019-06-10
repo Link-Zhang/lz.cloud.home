@@ -124,7 +124,7 @@ HouseServiceImpl implements HouseService {
         return (Specification<House>) (root, criteriaQuery, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (!StringUtils.isEmpty(houseDTO.getHouseDistrict())) {
-                predicateList.add(criteriaBuilder.like(root.get("houseDistrict").as(String.class), "%" + houseDTO.getHouseDistrict() + "%"));
+                predicateList.add(criteriaBuilder.like(root.get("houseDistrict").as(String.class), "%" + houseDTO.getHouseDistrict().trim() + "%"));
             }
             if (!StringUtils.isEmpty(houseDTO.getHouseCommunityId())) {
                 predicateList.add(criteriaBuilder.equal(root.get("houseCommunityId").as(BigInteger.class), houseDTO.getHouseCommunityId()));
@@ -139,7 +139,7 @@ HouseServiceImpl implements HouseService {
                 predicateList.add(criteriaBuilder.like(root.get("houseTradingSituation").as(String.class), "%" + houseDTO.getHouseTradingSituation().trim() + "%"));
             }
             if (!StringUtils.isEmpty(houseDTO.getHouseIsUnique())) {
-                predicateList.add(criteriaBuilder.equal(root.get("houseIsUnique").as(String.class), houseDTO.getHouseIsUnique()));
+                predicateList.add(criteriaBuilder.equal(root.get("houseIsUnique").as(String.class), houseDTO.getHouseIsUnique().trim()));
             }
             if (null != ceilStructureArea) {
                 predicateList.add(criteriaBuilder.le(root.get("houseStructureArea").as(Double.class), ceilStructureArea));

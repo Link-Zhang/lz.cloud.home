@@ -141,7 +141,7 @@ public class HistoryController {
     @ApiOperation(value = "获取指定ID的历史价格", notes = "获取指定ID的历史价格")
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
-    HistoryOutput findByHistoryId(@PathVariable BigInteger id) {
+    HistoryOutput findByHistoryId(@PathVariable("id") BigInteger id) {
         Optional<History> historyOptional = historyService.findByHistoryId(id);
         ConvertUtil<History, HistoryVO> convertUtilOut = new ConvertUtil<>();
         List<HistoryVO> list = new ArrayList<>();
