@@ -53,6 +53,7 @@ package cn.sh.lz.cloud.vcommunity.common.outputs;
  */
 
 import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityCountVO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -67,6 +68,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VCommunityCountOutput {
+    @JsonProperty("vcommunityCountVOList")
     @ApiModelProperty(notes = "社区数量列表", required = true)
     private List<VCommunityCountVO> vcommunityCountVOList;
 }

@@ -127,105 +127,134 @@ public interface HouseClient {
     @GetMapping(value = "/api/v1/house/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     HouseByIdOutput findById(@PathVariable(value = "id") BigInteger id);
 
+    @GetMapping(value = "/api/v1/house/{id}/history", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    HouseHistoryByIdOutput findHistoryByHouseId(@PathVariable(value = "id") BigInteger id);
+
     @Component
     static class HouseClientFallback implements HouseClient {
         @Override
         public HouseOutput find(HouseInput houseInput) {
+            System.out.println("【house微服务中的find服务降级!】");
             return null;
         }
 
         @Override
         public HouseAvgTotalPriceOutput findAvgTotalPrice(HouseAvgTotalPriceInput houseAvgTotalPriceInput) {
+            System.out.println("【house微服务中的findAvgTotalPrice服务降级!】");
             return null;
         }
 
         @Override
         public HouseAvgUnitPriceOutput findAvgUnitPrice(HouseAvgUnitPriceInput houseAvgUnitPriceInput) {
+            System.out.println("【house微服务中的findAvgUnitPrice服务降级!】");
             return null;
         }
 
         @Override
         public HouseCertificateOutput findCertificate() {
+            System.out.println("【house微服务中的findCertificate服务降级!】");
             return null;
         }
 
         @Override
         public HouseCommunityNameOutput findCommunityName(HouseCommunityNameInput houseCommunityNameInput) {
+            System.out.println("【house微服务中的findCommunityName服务降级!】");
             return null;
         }
 
         @Override
         public HouseCountOutput findCount(HouseCountInput houseCountInput) {
+            System.out.println("【house微服务中的findCount服务降级!】");
             return null;
         }
 
         @Override
         public HouseDecorationOutput findDecoration() {
+            System.out.println("【house微服务中的findDecoration服务降级!】");
             return null;
         }
 
         @Override
         public HouseDirectionOutput findDirection() {
+            System.out.println("【house微服务中的findDirection服务降级!】");
             return null;
         }
 
         @Override
         public HouseDistrictOutput findDistrict() {
+            System.out.println("【house微服务中的findDistrict服务降级!】");
             return null;
         }
 
         @Override
         public HouseFloorOutput findFloor() {
+            System.out.println("【house微服务中的findFloor服务降级!】");
             return null;
         }
 
         @Override
         public HouseHasElevatorOutput findHasElevator() {
+            System.out.println("【house微服务中的findHasElevator服务降级!】");
             return null;
         }
 
         @Override
         public String hello() {
-            return "服务降级!";
+            System.out.println("【house微服务中的hello服务降级!】");
+            return null;
         }
 
         @Override
         public HouseIdOutput findId(HouseIdInput houseIdInput) {
+            System.out.println("【house微服务中的findId服务降级!】");
             return null;
         }
 
         @Override
         public HouseIsUniqueOutput findIsUnique() {
+            System.out.println("【house微服务中的findIsUnique服务降级!】");
             return null;
         }
 
         @Override
         public HousePropertyOwnershipOutput findPropertyOwnership() {
+            System.out.println("【house微服务中的findPropertyOwnership服务降级!】");
             return null;
         }
 
         @Override
         public HouseTradingOwnershipOutput findTradingOwnership() {
+            System.out.println("【house微服务中的findTradingOwnership服务降级!】");
             return null;
         }
 
         @Override
         public HouseTradingSituationOutput findTradingSituation() {
+            System.out.println("【house微服务中的findTradingSituation服务降级!】");
             return null;
         }
 
         @Override
         public HouseTypeOutput findType() {
+            System.out.println("【house微服务中的findType服务降级!】");
             return null;
         }
 
         @Override
         public HouseUsageOutput findUsage() {
+            System.out.println("【house微服务中的findUsage服务降级!】");
             return null;
         }
 
         @Override
         public HouseByIdOutput findById(BigInteger id) {
+            System.out.println("【house微服务中的findById服务降级!】");
+            return null;
+        }
+
+        @Override
+        public HouseHistoryByIdOutput findHistoryByHouseId(BigInteger id) {
+            System.out.println("【house微服务中的findHistoryByHouseId服务降级!】");
             return null;
         }
     }

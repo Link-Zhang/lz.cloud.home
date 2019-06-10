@@ -53,6 +53,7 @@ package cn.sh.lz.cloud.vcommunity.common.outputs;
  */
 
 import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityVO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -65,6 +66,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VCommunityByIdOutput {
+    @JsonProperty("vcommunityVO")
     @ApiModelProperty(notes = "社区", required = true)
     private VCommunityVO vcommunityVO;
 }

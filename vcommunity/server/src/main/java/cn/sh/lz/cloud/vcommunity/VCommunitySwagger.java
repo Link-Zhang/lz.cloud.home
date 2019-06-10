@@ -88,6 +88,9 @@ public class VCommunitySwagger {
         ArrayList<SecurityContext> securityContexts = newArrayList(SecurityContext.builder().securityReferences
                 (newArrayList(securityReference)).build());
 
+//        com.google.common.base.Predicate<RequestHandler> selector1 = RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.vcommunity.controllers");
+//        com.google.common.base.Predicate<RequestHandler> selector2 = RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.vcommunity.feign.controller");
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .securitySchemes(newArrayList(new BasicAuth("home")))
                 .securityContexts(securityContexts)
@@ -95,6 +98,7 @@ public class VCommunitySwagger {
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("cn.sh.lz.cloud.vcommunity.feign.controller"))
+//                .apis(Predicates.or(selector1, selector2))
                 .paths(PathSelectors.any())
                 .build();
     }

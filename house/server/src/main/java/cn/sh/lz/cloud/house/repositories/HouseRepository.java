@@ -69,7 +69,6 @@ import java.util.List;
  * Created by Link at 16:45 on 4/11/19.
  */
 
-// todo change it to async
 public interface HouseRepository extends JpaRepository<House, BigInteger>, JpaSpecificationExecutor<House> {
     @Query("SELECT NEW cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO(h.houseDistrict, AVG(h.houseTotalPrice)) FROM House AS h GROUP BY h.houseDistrict ORDER BY AVG(h.houseTotalPrice) ASC ")
     List<HouseAvgTotalPriceDO> findAvgTotalPrice();

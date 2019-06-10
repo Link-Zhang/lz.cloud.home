@@ -10,7 +10,7 @@ spring:
         format_sql: true
         hbm2ddl:
           auto: update
-    show-sql: true
+#    show-sql: true
   jackson:
     default-property-inclusion: non_null
 cn:
@@ -22,6 +22,6 @@ cn:
             size: 10
             page: 1
             price: 250.0
-logging:
-  level:
-    org.hibernate.type: TRACE
+#logging:
+#  level:
+#    org.hibernate.type: TRACE

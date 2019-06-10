@@ -1,5 +1,11 @@
 package cn.sh.lz.cloud.house.services.impls;
 
+import cn.sh.lz.cloud.history.clients.HistoryClient;
+import cn.sh.lz.cloud.history.common.entities.History;
+import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
+import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
+import cn.sh.lz.cloud.history.common.vos.HistoryFindVO;
+import cn.sh.lz.cloud.history.common.vos.HistoryVO;
 import cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO;
 import cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO;
 import cn.sh.lz.cloud.house.common.dos.HouseCountDO;
@@ -85,9 +91,15 @@ import java.util.Optional;
  * Created by Link at 16:48 on 4/11/19.
  */
 @Service
-public class HouseServiceImpl implements HouseService {
+public class
+
+
+HouseServiceImpl implements HouseService {
     @Autowired
     private HouseRepository houseRepository;
+
+    @Autowired
+    private HistoryClient historyClient;
 
     @Value("${cn.sh.lz.cloud.house.default.size}")
     private Integer DEFAULT_SIZE;
@@ -345,5 +357,22 @@ public class HouseServiceImpl implements HouseService {
     public Optional<House> findByHouseId(BigInteger id) {
         Assert.notNull(id, "The given id must not be null!");
         return houseRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<History> findHistoryByHouseId(BigInteger id) {
+        Assert.notNull(id, "The given id must not be null!");
+        HistoryFindVO historyFindVO = new HistoryFindVO();
+        historyFindVO.setHistoryHouseId(id);
+        HistoryInput historyInput = new HistoryInput();
+        historyInput.setHistoryFindVO(historyFindVO);
+        HistoryOutput historyOutput = historyClient.find(historyInput);
+        List<HistoryVO> list = new ArrayList<>();
+        if (Optional.ofNullable(historyOutput).isPresent()) {
+            list = historyOutput.getHistoryList();
+        }
+        ConvertUtil<HistoryVO, History> convertUtil = new ConvertUtil<>();
+        return convertUtil.convert(list, History.class);
     }
 }

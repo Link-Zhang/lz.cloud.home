@@ -52,7 +52,7 @@ package cn.sh.lz.cloud.vcommunity.common.outputs;
  *                  Happy Hacking Key Board
  */
 
-import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityVO;
+import cn.sh.lz.cloud.house.common.vos.HouseVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -67,8 +67,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VCommunityOutput {
-    @JsonProperty("vCommunityVOList")
-    @ApiModelProperty(notes = "社区列表", required = true)
-    private List<VCommunityVO> vCommunityVOList;
+public class VCommunityHouseByIdOutput {
+    @JsonProperty("houseVOList")
+    @ApiModelProperty(notes = "社区房屋列表", required = true)
+    private List<HouseVO> houseVOList;
 }

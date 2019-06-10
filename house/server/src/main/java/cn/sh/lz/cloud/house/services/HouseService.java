@@ -1,5 +1,6 @@
 package cn.sh.lz.cloud.house.services;
 
+import cn.sh.lz.cloud.history.common.entities.History;
 import cn.sh.lz.cloud.house.common.dtos.HouseAvgTotalPriceDTO;
 import cn.sh.lz.cloud.house.common.dtos.HouseAvgUnitPriceDTO;
 import cn.sh.lz.cloud.house.common.dtos.HouseCountDTO;
@@ -103,4 +104,6 @@ public interface HouseService {
     List<String> findDistinctUsage();
 
     Optional<House> findByHouseId(BigInteger id);
+
+    List<History> findHistoryByHouseId(BigInteger id);
 }

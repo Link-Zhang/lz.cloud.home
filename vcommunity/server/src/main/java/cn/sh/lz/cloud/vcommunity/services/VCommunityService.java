@@ -52,6 +52,7 @@ package cn.sh.lz.cloud.vcommunity.services;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.house.common.entities.House;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityCountDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityFindDTO;
@@ -72,4 +73,6 @@ public interface VCommunityService {
     List<VCommunityCountDTO> findCount(String district);
 
     Optional<VCommunityDTO> findByVCommunityId(BigInteger id);
+
+    List<House> findHouseByCommunityId(BigInteger id);
 }

@@ -85,21 +85,25 @@ public interface HistoryClient {
     static class HistoryClientFallback implements HistoryClient {
         @Override
         public HistoryOutput find(HistoryInput historyInput) {
+            System.out.println("【history微服务中的find服务降级!】");
             return null;
         }
 
         @Override
         public String hello() {
-            return "服务降级!";
+            System.out.println("【history微服务中的hello服务降级!】");
+            return null;
         }
 
         @Override
         public HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
+            System.out.println("【history微服务中的findHouseId服务出错!】");
             return null;
         }
 
         @Override
         public HistoryOutput findByHistoryId(BigInteger id) {
+            System.out.println("【history微服务中的findByHistoryId服务出错!】");
             return null;
         }
     }

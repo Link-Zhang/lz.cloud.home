@@ -57,15 +57,13 @@ import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
+import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -110,5 +108,11 @@ public class FeignController {
     @GetMapping(path = "/{id}")
     public VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
         return vcommunityClient.findById(id);
+    }
+
+    @ApiOperation(value = "指定社区的房屋", notes = "获取指定ID社区的房屋")
+    @GetMapping(path = "/{id}/house")
+    public VCommunityHouseByIdOutput findHouseByCommunityId(@PathVariable("id") BigInteger id) {
+        return vcommunityClient.findHouseByCommunityId(id);
     }
 }

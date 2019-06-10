@@ -56,6 +56,7 @@ import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
+import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
@@ -82,25 +83,37 @@ public interface VCommunityClient {
     @GetMapping(value = "/api/v1/vcommunity/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     VCommunityByIdOutput findById(@PathVariable("id") BigInteger id);
 
+    @GetMapping(value = "/api/v1/vcommunity/{id}/house", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    VCommunityHouseByIdOutput findHouseByCommunityId(@PathVariable("id") BigInteger id);
+
     @Component
     static class VCommunityClientFallback implements VCommunityClient {
         @Override
         public VCommunityOutput findAll(VCommunityInput vCommunityInput) {
+            System.out.println("【vcommunity微服务中的findAll服务降级!】");
             return null;
         }
 
         @Override
         public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
+            System.out.println("【vcommunity微服务中的findCount服务降级!】");
             return null;
         }
 
         @Override
         public String hello() {
-            return "服务降级!";
+            System.out.println("【vcommunity微服务中的hello服务降级!】");
+            return null;
         }
 
         @Override
         public VCommunityByIdOutput findById(BigInteger id) {
+            System.out.println("【vcommunity微服务中的findById服务降级!】");
+            return null;
+        }
+
+        @Override
+        public VCommunityHouseByIdOutput findHouseByCommunityId(BigInteger id) {
             return null;
         }
     }

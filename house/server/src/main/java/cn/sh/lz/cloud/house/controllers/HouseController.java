@@ -1,5 +1,7 @@
 package cn.sh.lz.cloud.house.controllers;
 
+import cn.sh.lz.cloud.history.common.entities.History;
+import cn.sh.lz.cloud.history.common.vos.HistoryVO;
 import cn.sh.lz.cloud.house.common.dtos.HouseAvgTotalPriceDTO;
 import cn.sh.lz.cloud.house.common.dtos.HouseAvgUnitPriceDTO;
 import cn.sh.lz.cloud.house.common.dtos.HouseCountDTO;
@@ -201,6 +203,7 @@ public class HouseController {
         return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
     }
 
+    //    set Timeout to 3000ms
     @ApiOperation(value = "获取房屋ID", notes = "获取房屋ID(默认10条)")
     @GetMapping(path = "/id", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
@@ -275,5 +278,15 @@ public class HouseController {
             HouseVO houseVO = new HouseVO();
             return new HouseByIdOutput(houseVO);
         }
+    }
+
+    @ApiOperation(value = "获取指定ID房屋的历史价格", notes = "获取指定ID房屋的历史价格")
+    @GetMapping(path = "/{id}/history", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody
+    HouseHistoryByIdOutput findHistoryByHouseId(@PathVariable(value = "id") BigInteger id) {
+        List<History> historyList = houseService.findHistoryByHouseId(id);
+        ConvertUtil<History, HistoryVO> convertUtil = new ConvertUtil<>();
+        List<HistoryVO> list = convertUtil.convert(historyList, HistoryVO.class);
+        return new HouseHistoryByIdOutput(list);
     }
 }

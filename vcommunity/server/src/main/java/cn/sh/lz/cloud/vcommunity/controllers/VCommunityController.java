@@ -52,6 +52,8 @@ package cn.sh.lz.cloud.vcommunity.controllers;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.house.common.entities.House;
+import cn.sh.lz.cloud.house.common.vos.HouseVO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityCountDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityFindDTO;
@@ -60,6 +62,7 @@ import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
+import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import cn.sh.lz.cloud.vcommunity.common.utils.ConvertUtil;
 import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityCountVO;
@@ -137,5 +140,15 @@ public class VCommunityController {
     VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
         ConvertUtil<VCommunityDTO, VCommunityVO> convertUtil = new ConvertUtil<>();
         return new VCommunityByIdOutput(convertUtil.convert(vCommunityService.findByVCommunityId(id).orElse(null), VCommunityVO.class));
+    }
+
+    @ApiOperation(value = "获取指定ID社区的房屋", notes = "获取指定ID社区的房屋")
+    @GetMapping(path = "/{id}/house", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody
+    VCommunityHouseByIdOutput findHouseByCommunityId(@PathVariable("id") BigInteger id) {
+        List<House> houseList = vCommunityService.findHouseByCommunityId(id);
+        ConvertUtil<House, HouseVO> convertUtil = new ConvertUtil<>();
+        List<HouseVO> list = convertUtil.convert(houseList, HouseVO.class);
+        return new VCommunityHouseByIdOutput(list);
     }
 }

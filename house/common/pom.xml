@@ -23,6 +23,7 @@
         <spring-beans.version>5.0.10.RELEASE</spring-beans.version>
         <spring-data-commons.version>2.0.11.RELEASE</spring-data-commons.version>
         <hibernate-jpa-2.1-api.version>1.0.2.Final</hibernate-jpa-2.1-api.version>
+        <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
     </properties>
 
     <dependencies>
@@ -64,6 +65,13 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>${hibernate-jpa-2.1-api.version}</version>
+        </dependency>
+
+        <!--Home History Common-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-history-common</artifactId>
+            <version>${home-history-common.version}</version>
         </dependency>
     </dependencies>
 </project>

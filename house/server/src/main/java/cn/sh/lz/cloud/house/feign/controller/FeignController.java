@@ -59,10 +59,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -205,4 +202,9 @@ public class FeignController {
         return houseClient.findById(id);
     }
 
+    @ApiOperation(value = "指定ID房屋的历史价格", notes = "获取指定ID房屋的历史价格")
+    @GetMapping(value = "/{id}/history")
+    public HouseHistoryByIdOutput findHistoryByHouseId(@PathVariable(value = "id") BigInteger id) {
+        return houseClient.findHistoryByHouseId(id);
+    }
 }

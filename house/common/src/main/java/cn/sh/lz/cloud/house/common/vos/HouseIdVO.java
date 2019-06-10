@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigInteger;
+
 /***
  *                    _ooOoo_
  *                   o8888888o
@@ -155,5 +157,5 @@ public class HouseIdVO {
 
     @JsonProperty("houseCommunityId")
     @ApiModelProperty(notes = "小区Id")
-    private String houseCommunityId;
+    private BigInteger houseCommunityId;
 }

@@ -52,6 +52,12 @@ package cn.sh.lz.cloud.vcommunity.services.impls;
  *                  Happy Hacking Key Board
  */
 
+import cn.sh.lz.cloud.house.clients.HouseClient;
+import cn.sh.lz.cloud.house.common.entities.House;
+import cn.sh.lz.cloud.house.common.inputs.HouseInput;
+import cn.sh.lz.cloud.house.common.outputs.HouseOutput;
+import cn.sh.lz.cloud.house.common.vos.HouseFindVO;
+import cn.sh.lz.cloud.house.common.vos.HouseVO;
 import cn.sh.lz.cloud.vcommunity.common.dos.VCommunityCountDO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityCountDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityDTO;
@@ -82,6 +88,9 @@ import java.util.Optional;
 public class VCommunityServiceImpl implements VCommunityService {
     @Autowired
     private VCommunityRepository vCommunityRepository;
+
+    @Autowired
+    private HouseClient houseClient;
 
     // todo: method too complex
     private Specification<VCommunity> getVCommunitySpecification(VCommunityFindDTO vCommunityFindDTO) {
@@ -217,5 +226,22 @@ public class VCommunityServiceImpl implements VCommunityService {
         Assert.notNull(id, "The given id must not be null!");
         ConvertUtil<VCommunity, VCommunityDTO> convertUtil = new ConvertUtil<>();
         return Optional.ofNullable(convertUtil.convert(vCommunityRepository.findById(id).orElse(null), VCommunityDTO.class));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<House> findHouseByCommunityId(BigInteger id) {
+        Assert.notNull(id, "The given id must not be null!");
+        HouseFindVO houseFindVO = new HouseFindVO();
+        houseFindVO.setHouseCommunityId(id);
+        HouseInput houseInput = new HouseInput();
+        houseInput.setHouseFindVO(houseFindVO);
+        HouseOutput houseOutput = houseClient.find(houseInput);
+        List<HouseVO> list = new ArrayList<>();
+        if (Optional.ofNullable(houseOutput).isPresent()) {
+            list = houseOutput.getHouseVOList();
+        }
+        ConvertUtil<HouseVO, House> convertUtil = new ConvertUtil<>();
+        return convertUtil.convert(list, House.class);
     }
 }

@@ -20,6 +20,8 @@
 
     <properties>
         <swagger2.version>2.7.0</swagger2.version>
+        <home-house-client.version>1.0.0.RELEASE</home-house-client.version>
+        <home-house-common.version>1.0.0.RELEASE</home-house-common.version>
         <home-vcommunity-client.version>1.0.0.RELEASE</home-vcommunity-client.version>
         <home-vcommunity-common.version>1.0.0.RELEASE</home-vcommunity-common.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
@@ -101,6 +103,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!--Home House Client-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-house-client</artifactId>
+            <version>${home-house-client.version}</version>
+        </dependency>
+
+        <!--Home House Common-->
+        <dependency>
+            <groupId>cn.sh.lz.cloud</groupId>
+            <artifactId>home-house-common</artifactId>
+            <version>${home-house-common.version}</version>
         </dependency>
 
         <!--Home VCommunity Client-->
