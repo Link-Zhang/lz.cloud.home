@@ -67,6 +67,7 @@ import java.util.List;
 /**
  * Created by Link at 14:51 on 6/4/19.
  */
+@CrossOrigin(origins = "*", allowCredentials = "true")
 @RequestMapping("/feign/house")
 @RestController
 public class FeignController {
