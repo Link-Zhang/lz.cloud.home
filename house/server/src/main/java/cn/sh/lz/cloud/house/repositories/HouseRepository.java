@@ -1,17 +1,10 @@
 package cn.sh.lz.cloud.house.repositories;
 
-import cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO;
-import cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO;
-import cn.sh.lz.cloud.house.common.dos.HouseCountDO;
 import cn.sh.lz.cloud.house.common.entities.House;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.math.BigInteger;
-import java.util.List;
 
 /***
  *                    _ooOoo_
@@ -70,63 +63,4 @@ import java.util.List;
  */
 
 public interface HouseRepository extends JpaRepository<House, BigInteger>, JpaSpecificationExecutor<House> {
-    @Query("SELECT NEW cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO(h.houseDistrict, AVG(h.houseTotalPrice)) FROM House AS h GROUP BY h.houseDistrict ORDER BY AVG(h.houseTotalPrice) ASC ")
-    List<HouseAvgTotalPriceDO> findAvgTotalPrice();
-
-    @Query("SELECT NEW cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO(h.houseDistrict,AVG(h.houseTotalPrice)) FROM House AS h WHERE h.houseDistrict LIKE :district")
-    List<HouseAvgTotalPriceDO> findDistrictAvgTotalPrice(@Param("district") String district);
-
-    @Query("SELECT NEW cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO(h.houseDistrict, AVG(h.houseUnitPrice)) FROM House AS h WHERE h.houseTotalPrice <=:totalPrice GROUP BY h.houseDistrict ORDER BY AVG(h.houseUnitPrice) ASC")
-    List<HouseAvgUnitPriceDO> findAvgUnitPrice(@Param("totalPrice") Double totalPrice);
-
-    @Query("SELECT NEW cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO(h.houseDistrict,AVG(h.houseUnitPrice)) FROM House AS h WHERE h.houseDistrict LIKE :district AND h.houseTotalPrice<=:totalPrice ORDER BY AVG(h.houseUnitPrice) ASC")
-    List<HouseAvgUnitPriceDO> findDistrictAvgUnitPrice(@Param("district") String district, @Param("totalPrice") Double totalPrice);
-
-    @Query("SELECT distinct h.houseCertificate FROM House AS h")
-    List<String> findDistinctCertificate();
-
-    @Query("SELECT distinct h.houseCommunityName FROM House AS h")
-    List<String> findDistinctCommunityName(Pageable pageable);
-
-    @Query("SELECT distinct h.houseCommunityName FROM House AS h WHERE h.houseDistrict LIKE :district")
-    List<String> findDistinctCommunityName(@Param("district") String district, Pageable pageable);
-
-    @Query("SELECT new cn.sh.lz.cloud.house.common.dos.HouseCountDO(h.houseDistrict, COUNT(h.houseId)) FROM House AS h GROUP BY h.houseDistrict order by COUNT(h.houseId) ASC")
-    List<HouseCountDO> findCount();
-
-    @Query("SELECT new cn.sh.lz.cloud.house.common.dos.HouseCountDO(h.houseDistrict, COUNT(h.houseId)) FROM House AS h WHERE h.houseDistrict LIKE :district")
-    List<HouseCountDO> findDistrictCount(@Param("district") String district);
-
-    @Query("SELECT distinct h.houseDecoration FROM House AS h")
-    List<String> findDistinctDecoration();
-
-    @Query("SELECT distinct h.houseDirection FROM House AS h")
-    List<String> findDistinctDirection();
-
-    @Query("SELECT distinct h.houseDistrict FROM House AS h")
-    List<String> findDistinctDistrict();
-
-    @Query("SELECT distinct h.houseFloor FROM House AS h ORDER BY  h.houseFloor ASC")
-    List<String> findDistinctFloor();
-
-    @Query("SELECT distinct h.houseHasElevator FROM House AS h")
-    List<String> findDistinctHasElevator();
-
-    @Query("SELECT distinct h.houseIsUnique FROM House AS h")
-    List<String> findDistinctIsUnique();
-
-    @Query("SELECT distinct h.housePropertyOwnership FROM House AS h")
-    List<String> findDistinctPropertyOwnership();
-
-    @Query("SELECT distinct h.houseTradingOwnership FROM House AS h")
-    List<String> findDistinctTradingOwnership();
-
-    @Query("SELECT distinct h.houseTradingSituation FROM House AS h")
-    List<String> findDistinctTradingSituation();
-
-    @Query("SELECT distinct h.houseType FROM House AS h ORDER BY h.houseType ASC")
-    List<String> findDistinctType();
-
-    @Query("SELECT distinct h.houseUsage FROM House AS h")
-    List<String> findDistinctUsage();
 }

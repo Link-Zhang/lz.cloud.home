@@ -6,12 +6,6 @@ import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
 import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
 import cn.sh.lz.cloud.history.common.vos.HistoryFindVO;
 import cn.sh.lz.cloud.history.common.vos.HistoryVO;
-import cn.sh.lz.cloud.house.common.dos.HouseAvgTotalPriceDO;
-import cn.sh.lz.cloud.house.common.dos.HouseAvgUnitPriceDO;
-import cn.sh.lz.cloud.house.common.dos.HouseCountDO;
-import cn.sh.lz.cloud.house.common.dtos.HouseAvgTotalPriceDTO;
-import cn.sh.lz.cloud.house.common.dtos.HouseAvgUnitPriceDTO;
-import cn.sh.lz.cloud.house.common.dtos.HouseCountDTO;
 import cn.sh.lz.cloud.house.common.dtos.HouseDTO;
 import cn.sh.lz.cloud.house.common.entities.House;
 import cn.sh.lz.cloud.house.common.utils.ConvertUtil;
@@ -20,7 +14,6 @@ import cn.sh.lz.cloud.house.services.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -29,7 +22,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -209,154 +201,6 @@ HouseServiceImpl implements HouseService {
         } else {
             return houseRepository.findAll(pageable);
         }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<HouseAvgTotalPriceDTO> findAvgTotalPrice(String district) {
-        List<HouseAvgTotalPriceDO> list;
-        if (StringUtils.isEmpty(district)) {
-            list = houseRepository.findAvgTotalPrice();
-        } else {
-            list = houseRepository.findDistrictAvgTotalPrice("%" + district.trim() + "%");
-        }
-        List<HouseAvgTotalPriceDTO> rList = new ArrayList<>();
-        for (HouseAvgTotalPriceDO item : list) {
-            if (Optional.ofNullable(item.getHouseDistrict()).isPresent() && Optional.ofNullable(item.getHouseAvgTotalPrice()).isPresent()) {
-                BigDecimal bg = new BigDecimal(item.getHouseAvgTotalPrice());
-                double num = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-                rList.add(new HouseAvgTotalPriceDTO(item.getHouseDistrict(), num));
-            }
-        }
-        return rList;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<HouseAvgUnitPriceDTO> findAvgUnitPrice(String district, Double price) {
-        Double totalPrice = Optional.ofNullable(price).filter(i -> i > 0).orElse(DEFAULT_PRICE);
-        List<HouseAvgUnitPriceDO> list;
-        if (StringUtils.isEmpty(district)) {
-            list = houseRepository.findAvgUnitPrice(totalPrice);
-        } else {
-            list = houseRepository.findDistrictAvgUnitPrice("%" + district.trim() + "%", totalPrice);
-        }
-        List<HouseAvgUnitPriceDTO> rList = new ArrayList<>();
-        for (HouseAvgUnitPriceDO item : list) {
-            if (Optional.ofNullable(item.getHouseDistrict()).isPresent() && Optional.ofNullable(item.getHouseAvgUnitPrice()).isPresent()) {
-                rList.add(new HouseAvgUnitPriceDTO(item.getHouseDistrict(), Math.ceil(item.getHouseAvgUnitPrice())));
-            }
-        }
-        return rList;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctCertificate() {
-        return houseRepository.findDistinctCertificate();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctCommunityName(String district, Integer limit) {
-        Integer size = Optional.ofNullable(limit).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Pageable pageable = PageRequest.of(DEFAULT_PAGE, size);
-        if (StringUtils.isEmpty(district)) {
-            return houseRepository.findDistinctCommunityName(pageable);
-        } else {
-            return houseRepository.findDistinctCommunityName("%" + district.trim() + "%", pageable);
-        }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<HouseCountDTO> findCount(String district) {
-        ConvertUtil<HouseCountDO, HouseCountDTO> convertUtil = new ConvertUtil<>();
-        if (StringUtils.isEmpty(district)) {
-            return convertUtil.convert(houseRepository.findCount(), HouseCountDTO.class);
-        } else {
-            List<HouseCountDO> houseCountDOList = houseRepository.findDistrictCount("%" + district.trim() + "%");
-            List<HouseCountDTO> list = new ArrayList<>();
-            for (HouseCountDO houseCountDO : houseCountDOList) {
-                if (Optional.ofNullable(houseCountDO.getHouseDistrict()).isPresent()) {
-                    list.add(convertUtil.convert(houseCountDO, HouseCountDTO.class));
-                }
-            }
-            return list;
-        }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctDecoration() {
-        return houseRepository.findDistinctDecoration();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctDirection() {
-        return houseRepository.findDistinctDirection();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctDistrict() {
-        return houseRepository.findDistinctDistrict();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctFloor() {
-        return houseRepository.findDistinctFloor();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctHasElevator() {
-        return houseRepository.findDistinctHasElevator();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctIsUnique() {
-        return houseRepository.findDistinctIsUnique();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctPropertyOwnership() {
-        return houseRepository.findDistinctPropertyOwnership();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctTradingOwnership() {
-        return houseRepository.findDistinctTradingOwnership();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctTradingSituation() {
-        return houseRepository.findDistinctTradingSituation();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctType() {
-        return houseRepository.findDistinctType();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<String> findDistinctUsage() {
-        return houseRepository.findDistinctUsage();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<House> findByHouseId(BigInteger id) {
-        Assert.notNull(id, "The given id must not be null!");
-        return houseRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
