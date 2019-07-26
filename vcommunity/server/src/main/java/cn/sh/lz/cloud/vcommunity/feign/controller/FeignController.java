@@ -53,10 +53,7 @@ package cn.sh.lz.cloud.vcommunity.feign.controller;
  */
 
 import cn.sh.lz.cloud.vcommunity.clients.VCommunityClient;
-import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import io.swagger.annotations.ApiOperation;
@@ -87,12 +84,6 @@ public class FeignController {
         return vcommunityClient.findAll(vCommunityInput);
     }
 
-    @ApiOperation(value = "各辖区社区数量", notes = "获取各辖区社区数量")
-    @GetMapping(path = "/count")
-    public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
-        return vcommunityClient.findCount(vCommunityCountInput);
-    }
-
     @ApiOperation(value = "社区微服务测试", notes = "进行社区微服务测试")
     @GetMapping(path = "/hello")
     public String hello() {
@@ -105,11 +96,6 @@ public class FeignController {
         return discoveryClient.getInstances("vcommunity");
     }
 
-    @ApiOperation(value = "指定社区", notes = "获取指定ID的社区")
-    @GetMapping(path = "/{id}")
-    public VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
-        return vcommunityClient.findById(id);
-    }
 
     @ApiOperation(value = "指定社区的房屋", notes = "获取指定ID社区的房屋")
     @GetMapping(path = "/{id}/house")

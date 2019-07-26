@@ -58,9 +58,6 @@ import cn.sh.lz.cloud.house.common.inputs.HouseInput;
 import cn.sh.lz.cloud.house.common.outputs.HouseOutput;
 import cn.sh.lz.cloud.house.common.vos.HouseFindVO;
 import cn.sh.lz.cloud.house.common.vos.HouseVO;
-import cn.sh.lz.cloud.vcommunity.common.dos.VCommunityCountDO;
-import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityCountDTO;
-import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityFindDTO;
 import cn.sh.lz.cloud.vcommunity.common.entities.VCommunity;
 import cn.sh.lz.cloud.vcommunity.common.utils.ConvertUtil;
@@ -200,32 +197,6 @@ public class VCommunityServiceImpl implements VCommunityService {
         } else {
             return vCommunityRepository.findAll(pageable);
         }
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<VCommunityCountDTO> findCount(String district) {
-        List<VCommunityCountDO> list;
-        if (StringUtils.isEmpty(district)) {
-            list = vCommunityRepository.findCount();
-        } else {
-            list = vCommunityRepository.findDistrictCount("%" + district.trim() + "%");
-        }
-        List<VCommunityCountDTO> rList = new ArrayList<>();
-        for (VCommunityCountDO item : list) {
-            if (Optional.ofNullable(item.getDistrict()).isPresent() && Optional.ofNullable(item.getCount()).isPresent()) {
-                rList.add(new VCommunityCountDTO(item.getDistrict(), item.getCount()));
-            }
-        }
-        return rList;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<VCommunityDTO> findByVCommunityId(BigInteger id) {
-        Assert.notNull(id, "The given id must not be null!");
-        ConvertUtil<VCommunity, VCommunityDTO> convertUtil = new ConvertUtil<>();
-        return Optional.ofNullable(convertUtil.convert(vCommunityRepository.findById(id).orElse(null), VCommunityDTO.class));
     }
 
     @Transactional(readOnly = true)

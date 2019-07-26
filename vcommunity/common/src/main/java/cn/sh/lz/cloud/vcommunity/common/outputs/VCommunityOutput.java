@@ -68,7 +68,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VCommunityOutput {
-    @JsonProperty("vCommunityVOList")
+    @JsonProperty("vcommunityVOList")
     @ApiModelProperty(notes = "社区列表", required = true)
-    private List<VCommunityVO> vCommunityVOList;
+    private List<VCommunityVO> vcommunityVOList;
 }

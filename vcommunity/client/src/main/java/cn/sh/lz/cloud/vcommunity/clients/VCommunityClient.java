@@ -52,10 +52,7 @@ package cn.sh.lz.cloud.vcommunity.clients;
  *                  Happy Hacking Key Board
  */
 
-import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -74,14 +71,8 @@ public interface VCommunityClient {
     @GetMapping(value = "/api/v1/vcommunity/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     VCommunityOutput findAll(VCommunityInput vCommunityInput);
 
-    @GetMapping(value = "/api/v1/vcommunity/count", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput);
-
     @GetMapping(value = "/api/v1/vcommunity/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String hello();
-
-    @GetMapping(value = "/api/v1/vcommunity/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    VCommunityByIdOutput findById(@PathVariable("id") BigInteger id);
 
     @GetMapping(value = "/api/v1/vcommunity/{id}/house", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     VCommunityHouseByIdOutput findHouseByCommunityId(@PathVariable("id") BigInteger id);
@@ -95,20 +86,8 @@ public interface VCommunityClient {
         }
 
         @Override
-        public VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
-            System.out.println("【vcommunity微服务中的findCount服务降级!】");
-            return null;
-        }
-
-        @Override
         public String hello() {
             System.out.println("【vcommunity微服务中的hello服务降级!】");
-            return null;
-        }
-
-        @Override
-        public VCommunityByIdOutput findById(BigInteger id) {
-            System.out.println("【vcommunity微服务中的findById服务降级!】");
             return null;
         }
 

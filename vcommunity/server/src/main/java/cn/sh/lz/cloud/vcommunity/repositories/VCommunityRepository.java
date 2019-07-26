@@ -52,23 +52,14 @@ package cn.sh.lz.cloud.vcommunity.repositories;
  *                  Happy Hacking Key Board
  */
 
-import cn.sh.lz.cloud.vcommunity.common.dos.VCommunityCountDO;
 import cn.sh.lz.cloud.vcommunity.common.entities.VCommunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.math.BigInteger;
-import java.util.List;
 
 /**
  * Created by Link at 17:23 on 5/30/19.
  */
 public interface VCommunityRepository extends JpaRepository<VCommunity, BigInteger>, JpaSpecificationExecutor<VCommunity> {
-    @Query("SELECT new cn.sh.lz.cloud.vcommunity.common.dos.VCommunityCountDO(vc.communityDistrict, COUNT(vc.communityId)) FROM VCommunity as vc GROUP BY vc.communityDistrict order by COUNT(vc.communityId) asc")
-    List<VCommunityCountDO> findCount();
-
-    @Query("SELECT new cn.sh.lz.cloud.vcommunity.common.dos.VCommunityCountDO(vc.communityDistrict, COUNT(vc.communityId)) FROM VCommunity as vc WHERE vc.communityDistrict like :district")
-    List<VCommunityCountDO> findDistrictCount(@Param("district") String district);
 }

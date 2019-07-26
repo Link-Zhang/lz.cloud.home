@@ -54,18 +54,12 @@ package cn.sh.lz.cloud.vcommunity.controllers;
 
 import cn.sh.lz.cloud.house.common.entities.House;
 import cn.sh.lz.cloud.house.common.vos.HouseVO;
-import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityCountDTO;
-import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityDTO;
 import cn.sh.lz.cloud.vcommunity.common.dtos.VCommunityFindDTO;
 import cn.sh.lz.cloud.vcommunity.common.entities.VCommunity;
-import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityCountInput;
 import cn.sh.lz.cloud.vcommunity.common.inputs.VCommunityInput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityByIdOutput;
-import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityCountOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityHouseByIdOutput;
 import cn.sh.lz.cloud.vcommunity.common.outputs.VCommunityOutput;
 import cn.sh.lz.cloud.vcommunity.common.utils.ConvertUtil;
-import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityCountVO;
 import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityFindVO;
 import cn.sh.lz.cloud.vcommunity.common.vos.VCommunityVO;
 import cn.sh.lz.cloud.vcommunity.services.VCommunityService;
@@ -118,15 +112,6 @@ public class VCommunityController {
         return new VCommunityOutput(list);
     }
 
-    @ApiOperation(value = "获取各区社区数量", notes = "获取各区社区数量")
-    @GetMapping(path = "/count", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    VCommunityCountOutput findCount(VCommunityCountInput vCommunityCountInput) {
-        List<VCommunityCountDTO> list = vCommunityService.findCount(vCommunityCountInput.getDistrict());
-        ConvertUtil<VCommunityCountDTO, VCommunityCountVO> convertUtil = new ConvertUtil<>();
-        return new VCommunityCountOutput(convertUtil.convert(list, VCommunityCountVO.class));
-    }
-
     @ApiOperation(value = "社区微服务测试", notes = "社区微服务测试")
     @GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
@@ -134,13 +119,6 @@ public class VCommunityController {
         return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
     }
 
-    @ApiOperation(value = "获取指定ID的社区", notes = "获取指定ID的社区")
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    VCommunityByIdOutput findById(@PathVariable("id") BigInteger id) {
-        ConvertUtil<VCommunityDTO, VCommunityVO> convertUtil = new ConvertUtil<>();
-        return new VCommunityByIdOutput(convertUtil.convert(vCommunityService.findByVCommunityId(id).orElse(null), VCommunityVO.class));
-    }
 
     @ApiOperation(value = "获取指定ID社区的房屋", notes = "获取指定ID社区的房屋")
     @GetMapping(path = "/{id}/house", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
