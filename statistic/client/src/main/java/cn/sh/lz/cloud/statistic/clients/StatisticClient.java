@@ -58,9 +58,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.math.BigInteger;
 
 /**
  * Created by Link at 18:37 on 6/10/19.
@@ -73,9 +70,6 @@ public interface StatisticClient {
     @GetMapping(value = "/api/v1/statistic/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String hello();
 
-    @GetMapping(value = "/api/v1/statistic/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    StatisticOutput findByStatisticId(@PathVariable("id") BigInteger id);
-
     @Component
     static class StatisticClientFallback implements StatisticClient {
         @Override
@@ -87,12 +81,6 @@ public interface StatisticClient {
         @Override
         public String hello() {
             System.out.println("【statistic微服务中的hello服务降级!】");
-            return null;
-        }
-
-        @Override
-        public StatisticOutput findByStatisticId(BigInteger id) {
-            System.out.println("【statistic微服务中的findByStatisticId服务降级!】");
             return null;
         }
     }

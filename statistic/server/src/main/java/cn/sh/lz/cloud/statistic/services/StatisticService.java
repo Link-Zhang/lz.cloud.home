@@ -57,14 +57,9 @@ import cn.sh.lz.cloud.statistic.common.entities.Statistic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 /**
  * Created by Link at 18:56 on 6/10/19.
  */
 public interface StatisticService {
     Page<Statistic> findAllPaginated(StatisticDTO statisticDTO, Pageable pageable);
-
-    Optional<Statistic> findById(BigInteger id);
 }

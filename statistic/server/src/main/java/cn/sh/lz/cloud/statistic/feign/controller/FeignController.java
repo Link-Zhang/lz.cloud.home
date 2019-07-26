@@ -59,9 +59,11 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -93,11 +95,5 @@ public class FeignController {
     @GetMapping(value = "/instances")
     public List<ServiceInstance> instances() {
         return discoveryClient.getInstances("statistic");
-    }
-
-    @ApiOperation(value = "指定ID的统计信息", notes = "指定ID的统计信息")
-    @GetMapping(value = "/{id}")
-    public StatisticOutput findByStatisticId(@PathVariable("id") BigInteger id) {
-        return statisticClient.findByStatisticId(id);
     }
 }

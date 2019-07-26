@@ -66,7 +66,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.persistence.criteria.Predicate;
-import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -122,11 +121,5 @@ public class StatisticServiceImpl implements StatisticService {
         Assert.notNull(statisticDTO, "The given statisticDTO must not be null!");
         Assert.notNull(pageable, "The given pageable must not be null!");
         return statisticRepository.findAll(getStatisticSpecification(statisticDTO), pageable);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<Statistic> findById(BigInteger id) {
-        return statisticRepository.findById(id);
     }
 }
