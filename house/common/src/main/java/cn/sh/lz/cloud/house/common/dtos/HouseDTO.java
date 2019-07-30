@@ -2,6 +2,8 @@ package cn.sh.lz.cloud.house.common.dtos;
 
 import lombok.Data;
 
+import java.math.BigInteger;
+
 /***
  *                    _ooOoo_
  *                   o8888888o
@@ -105,5 +107,5 @@ public class HouseDTO {
 
     private String houseCertificate;
 
-    private String houseCommunityId;
+    private BigInteger houseCommunityId;
 }
