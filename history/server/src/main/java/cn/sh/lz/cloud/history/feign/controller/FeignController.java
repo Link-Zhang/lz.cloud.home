@@ -53,17 +53,17 @@ package cn.sh.lz.cloud.history.feign.controller;
  */
 
 import cn.sh.lz.cloud.history.clients.HistoryClient;
-import cn.sh.lz.cloud.history.common.inputs.HistoryHouseIdInput;
 import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
-import cn.sh.lz.cloud.history.common.outputs.HistoryHouseIdOutput;
 import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -91,21 +91,9 @@ public class FeignController {
         return historyClient.hello();
     }
 
-    @ApiOperation(value = "房屋ID", notes = "获取历史价格表中的房屋ID(默认10条)")
-    @GetMapping(path = "/houseId")
-    public HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
-        return historyClient.findHouseId(historyHouseIdInput);
-    }
-
     @ApiOperation(value = "历史微服务实例", notes = "获取历史微服务实例")
     @GetMapping(value = "/instances")
     public List<ServiceInstance> instances() {
         return discoveryClient.getInstances("history");
-    }
-
-    @ApiOperation(value = "指定ID的历史价格", notes = "获取指定ID的历史价格")
-    @GetMapping(path = "/{id}")
-    public HistoryOutput findByHistoryId(@PathVariable BigInteger id) {
-        return historyClient.findByHistoryId(id);
     }
 }

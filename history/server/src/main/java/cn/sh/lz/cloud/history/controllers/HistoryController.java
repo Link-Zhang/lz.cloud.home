@@ -2,13 +2,10 @@ package cn.sh.lz.cloud.history.controllers;
 
 import cn.sh.lz.cloud.history.common.dtos.HistoryFindDTO;
 import cn.sh.lz.cloud.history.common.entities.History;
-import cn.sh.lz.cloud.history.common.inputs.HistoryHouseIdInput;
 import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
-import cn.sh.lz.cloud.history.common.outputs.HistoryHouseIdOutput;
 import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
 import cn.sh.lz.cloud.history.common.utils.ConvertUtil;
 import cn.sh.lz.cloud.history.common.vos.HistoryFindVO;
-import cn.sh.lz.cloud.history.common.vos.HistoryHouseIdFindVO;
 import cn.sh.lz.cloud.history.common.vos.HistoryVO;
 import cn.sh.lz.cloud.history.services.HistoryService;
 import io.swagger.annotations.Api;
@@ -19,14 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /***
  *                    _ooOoo_
@@ -120,35 +117,5 @@ public class HistoryController {
     public @ResponseBody
     String hello() {
         return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
-    }
-
-    @ApiOperation(value = "获取历史价格表中的房屋ID", notes = "获取历史价格表中的房屋ID(默认10条)")
-    @GetMapping(path = "/houseId", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
-        Integer page = historyHouseIdInput.getPage();
-        Integer size = Optional.ofNullable(historyHouseIdInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Sort sort = new Sort(historyHouseIdInput.getSortDirection(), historyHouseIdInput.getSortProperties());
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
-        ConvertUtil<HistoryHouseIdFindVO, HistoryFindDTO> convertUtilIn = new ConvertUtil<>();
-        HistoryFindDTO historyFindDTO = convertUtilIn.convert(historyHouseIdInput.getHistoryHouseIdFindVO(), HistoryFindDTO.class);
-        Page<History> historyPage = historyService.findAllPaginated(historyFindDTO, pageRequest);
-        List<History> historyList = historyPage.getContent();
-        List<BigInteger> list = historyList.parallelStream().map(History::getHistoryHouseId).distinct().collect(Collectors.toList());
-        return new HistoryHouseIdOutput(list);
-    }
-
-    @ApiOperation(value = "获取指定ID的历史价格", notes = "获取指定ID的历史价格")
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    HistoryOutput findByHistoryId(@PathVariable("id") BigInteger id) {
-        Optional<History> historyOptional = historyService.findByHistoryId(id);
-        ConvertUtil<History, HistoryVO> convertUtilOut = new ConvertUtil<>();
-        List<HistoryVO> list = new ArrayList<>();
-        if (historyOptional.isPresent()) {
-            HistoryVO historyVO = convertUtilOut.convert(historyOptional.get(), HistoryVO.class);
-            list.add(historyVO);
-        }
-        return new HistoryOutput(list);
     }
 }

@@ -113,11 +113,4 @@ public class HistoryServiceImpl implements HistoryService {
             return historyRepository.findAll(pageable);
         }
     }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Optional<History> findByHistoryId(BigInteger id) {
-        Assert.notNull(id, "The given id must not be null!");
-        return historyRepository.findById(id);
-    }
 }

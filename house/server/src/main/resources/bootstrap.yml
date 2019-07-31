@@ -35,5 +35,9 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 3000
-        readTimeout: 3000
+        connectTimeout: 5000
+        readTimeout: 5000
+ribbon:
+  eager-load:
+    enabled: true
+    clients: ${spring.cloud.consul.discovery.instance-id}

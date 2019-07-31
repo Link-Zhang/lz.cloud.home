@@ -32,3 +32,7 @@ feign:
     enabled: true
   httpclient:
       enabled: true
+ribbon:
+  eager-load:
+    enabled: true
+    clients: ${spring.cloud.consul.discovery.instance-id}

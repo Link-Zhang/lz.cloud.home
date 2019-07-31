@@ -5,9 +5,6 @@ import cn.sh.lz.cloud.history.common.entities.History;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.math.BigInteger;
-import java.util.Optional;
-
 /***
  *                    _ooOoo_
  *                   o8888888o
@@ -65,6 +62,4 @@ import java.util.Optional;
  */
 public interface HistoryService {
     Page<History> findAllPaginated(HistoryFindDTO historyFindDTO, Pageable pageable);
-
-    Optional<History> findByHistoryId(BigInteger id);
 }

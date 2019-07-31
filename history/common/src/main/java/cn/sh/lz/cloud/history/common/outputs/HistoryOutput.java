@@ -68,7 +68,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryOutput {
-    @JsonProperty("historyList")
+    @JsonProperty("historyVOList")
     @ApiModelProperty(notes = "历史列表", required = true)
-    private List<HistoryVO> historyList;
+    private List<HistoryVO> historyVOList;
 }

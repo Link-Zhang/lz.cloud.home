@@ -214,7 +214,7 @@ HouseServiceImpl implements HouseService {
         HistoryOutput historyOutput = historyClient.find(historyInput);
         List<HistoryVO> list = new ArrayList<>();
         if (Optional.ofNullable(historyOutput).isPresent()) {
-            list = historyOutput.getHistoryList();
+            list = historyOutput.getHistoryVOList();
         }
         ConvertUtil<HistoryVO, History> convertUtil = new ConvertUtil<>();
         return convertUtil.convert(list, History.class);

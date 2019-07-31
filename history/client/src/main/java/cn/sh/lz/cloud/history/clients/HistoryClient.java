@@ -52,17 +52,12 @@ package cn.sh.lz.cloud.history.clients;
  *                  Happy Hacking Key Board
  */
 
-import cn.sh.lz.cloud.history.common.inputs.HistoryHouseIdInput;
 import cn.sh.lz.cloud.history.common.inputs.HistoryInput;
-import cn.sh.lz.cloud.history.common.outputs.HistoryHouseIdOutput;
 import cn.sh.lz.cloud.history.common.outputs.HistoryOutput;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import java.math.BigInteger;
 
 /**
  * Created by Link at 13:53 on 6/4/19.
@@ -75,12 +70,6 @@ public interface HistoryClient {
     @GetMapping(value = "/api/v1/history/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     String hello();
 
-    @GetMapping(value = "/api/v1/history/houseId", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput);
-
-    @GetMapping(value = "/api/v1/history/{id}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    HistoryOutput findByHistoryId(@PathVariable("id") BigInteger id);
-
     @Component
     static class HistoryClientFallback implements HistoryClient {
         @Override
@@ -92,18 +81,6 @@ public interface HistoryClient {
         @Override
         public String hello() {
             System.out.println("【history微服务中的hello服务降级!】");
-            return null;
-        }
-
-        @Override
-        public HistoryHouseIdOutput findHouseId(HistoryHouseIdInput historyHouseIdInput) {
-            System.out.println("【history微服务中的findHouseId服务出错!】");
-            return null;
-        }
-
-        @Override
-        public HistoryOutput findByHistoryId(BigInteger id) {
-            System.out.println("【history微服务中的findByHistoryId服务出错!】");
             return null;
         }
     }
