@@ -35,4 +35,4 @@ feign:
 ribbon:
   eager-load:
     enabled: true
-    clients: ${spring.cloud.consul.discovery.instance-id}
+    clients: ${spring.application.name}

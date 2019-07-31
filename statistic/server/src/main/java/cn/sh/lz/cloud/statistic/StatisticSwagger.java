@@ -73,7 +73,7 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 @Configuration
 @EnableSwagger2
-public class StatistiCSwagger {
+public class StatisticSwagger {
     @Bean
     public Docket createRestApi() {
         AuthorizationScope[] authScopes = new AuthorizationScope[1];
