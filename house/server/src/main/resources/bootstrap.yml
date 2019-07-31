@@ -29,15 +29,11 @@ spring:
     date-format: yyyy-MM-dd
 feign:
   hystrix:
-    enabled: true
+    enabled: false
   httpclient:
     enabled: true
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
-ribbon:
-  eager-load:
-    enabled: true
-    clients: ${spring.application.name}
+        connectTimeout: 10000
+        readTimeout: 10000

@@ -29,10 +29,6 @@ spring:
     date-format: yyyy-MM-dd
 feign:
   hystrix:
-    enabled: true
+    enabled: false
   httpclient:
     enabled: true
-ribbon:
-  eager-load:
-    enabled: true
-    clients: ${spring.application.name}
