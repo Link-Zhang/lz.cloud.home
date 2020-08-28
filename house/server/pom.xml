@@ -19,14 +19,24 @@
     </parent>
 
     <properties>
+        <spring-boot-starter-actuator.version>2.3.3.RELEASE</spring-boot-starter-actuator.version>
+        <spring-cloud-starter-consul-discovery.version>2.2.4.RELEASE</spring-cloud-starter-consul-discovery.version>
+        <spring-boot-starter-data-jpa.version>2.3.3.RELEASE</spring-boot-starter-data-jpa.version>
+        <spring-cloud-starter-openfeign.version>2.2.4.RELEASE</spring-cloud-starter-openfeign.version>
+        <spring-cloud-starter-netflix-hystrix.version>2.2.4.RELEASE</spring-cloud-starter-netflix-hystrix.version>
+        <spring-boot-starter-web.version>2.3.3.RELEASE</spring-boot-starter-web.version>
         <swagger2.version>2.7.0</swagger2.version>
+        <lombok.version>1.18.12</lombok.version>
+        <mysql-connector-java.version>8.0.21</mysql-connector-java.version>
+        <junit.version>4.13</junit.version>
+        <spring-boot-starter-test.version>2.3.3.RELEASE</spring-boot-starter-test.version>
         <home-history-client.version>1.0.0.RELEASE</home-history-client.version>
         <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
         <home-house-client.version>1.0.0.RELEASE</home-house-client.version>
         <home-house-common.version>1.0.0.RELEASE</home-house-common.version>
+        <httpclient.version>4.5.12</httpclient.version>
         <feign-httpclient.version>8.18.0</feign-httpclient.version>
-        <httpclient.version.version>4.5.8</httpclient.version.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.73</fastjson.version>
     </properties>
 
     <dependencies>
@@ -34,36 +44,42 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${spring-boot-starter-actuator.version}</version>
         </dependency>
 
         <!--Spring Cloud Consul-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
+            <version>${spring-cloud-starter-consul-discovery.version}</version>
         </dependency>
 
         <!--Spring Boot JPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${spring-boot-starter-data-jpa.version}</version>
         </dependency>
 
         <!--Spring Cloud OpenFeign-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${spring-cloud-starter-openfeign.version}</version>
         </dependency>
 
         <!--Spring Cloud Hystrix-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <version>${spring-cloud-starter-netflix-hystrix.version}</version>
         </dependency>
 
         <!--Spring Boot Web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot-starter-web.version}</version>
         </dependency>
 
         <!--Swagger 2-->
@@ -84,16 +100,21 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
         </dependency>
 
         <!--MySQL Connector Java-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
+
+        <!--Junit-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -101,6 +122,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot-starter-test.version}</version>
         </dependency>
 
         <!--Home History Client-->

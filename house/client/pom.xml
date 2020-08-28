@@ -18,6 +18,8 @@
     </parent>
 
     <properties>
+        <spring-cloud-starter-openfeign.version>2.2.4.RELEASE</spring-cloud-starter-openfeign.version>
+        <spring-boot-starter-web.version>2.3.3.RELEASE</spring-boot-starter-web.version>
         <home-house-common.version>1.0.0.RELEASE</home-house-common.version>
     </properties>
 
@@ -26,12 +28,14 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${spring-cloud-starter-openfeign.version}</version>
         </dependency>
 
         <!--Spring Boot Web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot-starter-web.version}</version>
         </dependency>
 
         <!--Home House Common-->
