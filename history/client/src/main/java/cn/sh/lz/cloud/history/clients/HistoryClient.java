@@ -64,10 +64,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @FeignClient(name = "history", fallback = HistoryClient.HistoryClientFallback.class)
 public interface HistoryClient {
-    @GetMapping(value = "/api/v1/history/", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/api/v1/history/")
     HistoryOutput find(HistoryInput historyInput);
 
-    @GetMapping(value = "/api/v1/history/hello", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/api/v1/history/hello")
     String hello();
 
     @Component

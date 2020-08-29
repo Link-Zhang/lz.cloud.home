@@ -98,11 +98,11 @@ public class HouseController {
     private HttpServletRequest request;
 
     @ApiOperation(value = "获取房屋", notes = "获取房屋(默认10条)")
-    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/")
     public @ResponseBody
     HouseOutput find(HouseInput houseInput) {
         Integer size = Optional.ofNullable(houseInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Sort sort = new Sort(houseInput.getSortDirection(), houseInput.getSortProperties());
+        Sort sort = Sort.by(houseInput.getSortDirection(), houseInput.getSortProperties());
         ConvertUtil<HouseFindVO, HouseDTO> convertUtilIn = new ConvertUtil<>();
         HouseDTO houseDTO = convertUtilIn.convert(houseInput.getHouseFindVO(), HouseDTO.class);
         Page<House> housePage = houseService.findAllPaginated(houseDTO, PageRequest.of(houseInput.getPage(), size, sort));
@@ -112,14 +112,14 @@ public class HouseController {
     }
 
     @ApiOperation(value = "房屋微服务测试", notes = "房屋微服务测试")
-    @GetMapping(path = "/hello", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/hello")
     public @ResponseBody
     String hello() {
         return springApplicationName + "-" + request.getLocalAddr() + "-" + request.getLocalPort();
     }
 
     @ApiOperation(value = "获取指定ID房屋的历史价格", notes = "获取指定ID房屋的历史价格")
-    @GetMapping(path = "/{id}/history", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(path = "/{id}/history")
     public @ResponseBody
     HouseHistoryByIdOutput findHistoryByHouseId(@PathVariable(value = "id") BigInteger id) {
         List<History> historyList = houseService.findHistoryByHouseId(id);
