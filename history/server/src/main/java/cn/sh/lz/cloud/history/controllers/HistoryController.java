@@ -102,7 +102,7 @@ public class HistoryController {
     HistoryOutput find(HistoryInput historyInput) {
         Integer page = historyInput.getPage();
         Integer size = Optional.ofNullable(historyInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Sort sort = new Sort(historyInput.getSortDirection(), historyInput.getSortProperties());
+        Sort sort = Sort.by(historyInput.getSortDirection(), historyInput.getSortProperties());
         PageRequest pageRequest = PageRequest.of(page, size, sort);
         ConvertUtil<HistoryFindVO, HistoryFindDTO> convertUtilIn = new ConvertUtil<>();
         HistoryFindDTO historyFindDTO = convertUtilIn.convert(historyInput.getHistoryFindVO(), HistoryFindDTO.class);

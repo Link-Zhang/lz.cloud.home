@@ -65,6 +65,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
@@ -82,7 +83,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
                 && null != template.body()) {
             try {
                 JsonNode jsonNode = objectMapper.readTree(template.body());
-                template.body(null);
+                template.body(null, Charset.defaultCharset());
                 Map<String, Collection<String>> queries = new HashMap<>();
                 buildQuery(jsonNode, "", queries);
                 template.queries(queries);

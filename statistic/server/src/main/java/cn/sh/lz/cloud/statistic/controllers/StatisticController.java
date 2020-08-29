@@ -101,7 +101,7 @@ public class StatisticController {
     public @ResponseBody
     StatisticOutput find(StatisticInput statisticInput) {
         Integer size = Optional.ofNullable(statisticInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Sort sort = new Sort(statisticInput.getSortDirection(), statisticInput.getSortProperties());
+        Sort sort = Sort.by(statisticInput.getSortDirection(), statisticInput.getSortProperties());
         ConvertUtil<StatisticFindVO, StatisticDTO> convertUtilIn = new ConvertUtil<>();
         StatisticDTO statisticDTO = convertUtilIn.convert(statisticInput.getStatisticFindVO(), StatisticDTO.class);
         Page<Statistic> statisticPage = statisticService.findAllPaginated(statisticDTO, PageRequest.of(statisticInput.getPage(), size, sort));

@@ -102,7 +102,7 @@ public class VCommunityController {
     public @ResponseBody
     VCommunityOutput findAll(VCommunityInput vCommunityInput) {
         Integer size = Optional.ofNullable(vCommunityInput.getLimit()).filter(i -> i > 0).orElse(DEFAULT_SIZE);
-        Sort sort = new Sort(vCommunityInput.getSortDirection(), vCommunityInput.getSortProperties());
+        Sort sort = Sort.by(vCommunityInput.getSortDirection(), vCommunityInput.getSortProperties());
         PageRequest pageRequest = PageRequest.of(vCommunityInput.getPage(), size, sort);
         ConvertUtil<VCommunityFindVO, VCommunityFindDTO> convertUtilIn = new ConvertUtil<>();
         VCommunityFindDTO vCommunityFindDTO = convertUtilIn.convert(vCommunityInput.getVcommunityFindVO(), VCommunityFindDTO.class);
