@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://${cn.sh.lz.cloud.mysql.host}:${cn.sh.lz.cloud.mysql.port}/${cn.sh.lz.cloud.mysql.database}?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://${cn.sh.lz.cloud.mysql.host}:${cn.sh.lz.cloud.mysql.port}/${cn.sh.lz.cloud.mysql.database}?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
     password: root
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
       hibernate:
@@ -24,10 +24,8 @@ cn:
         statistic:
           default:
             size: 10
-            page: 1
-            price: 250.0
             start:
-              year: 2019
+              year: 2020
               month: 1
               day: 1
             end:

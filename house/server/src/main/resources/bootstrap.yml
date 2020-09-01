@@ -24,7 +24,7 @@ spring:
       host: ${consul-host:127.0.0.1}
       port: ${consul-port:8500}
   mvc:
-    date-format: yyyy-MM-dd
+#    date-format: yyyy-MM-dd
     dispatch-options-request: true
   jackson:
     time-zone: GMT+8

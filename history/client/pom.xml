@@ -19,9 +19,9 @@
     </parent>
 
     <properties>
-        <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
-        <spring-cloud-starter-openfeign.version>2.2.4.RELEASE</spring-cloud-starter-openfeign.version>
+        <spring-cloud-starter-openfeign.version>2.2.5.RELEASE</spring-cloud-starter-openfeign.version>
         <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
+        <home-history-common.version>1.0.0.RELEASE</home-history-common.version>
     </properties>
 
     <dependencies>

@@ -21,7 +21,7 @@
     <properties>
         <lombok.version>1.18.12</lombok.version>
         <jackson-annotations.version>2.11.2</jackson-annotations.version>
-        <swagger-annotations.version>1.5.13</swagger-annotations.version>
+        <swagger-annotations.version>1.6.2</swagger-annotations.version>
         <spring-beans.version>5.2.8.RELEASE</spring-beans.version>
         <spring-data-commons.version>2.3.3.RELEASE</spring-data-commons.version>
         <hibernate-jpa-2.1-api.version>1.0.2.Final</hibernate-jpa-2.1-api.version>
