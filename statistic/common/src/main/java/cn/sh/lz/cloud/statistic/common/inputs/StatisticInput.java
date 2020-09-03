@@ -28,5 +28,5 @@ public class StatisticInput {
 
     @JsonProperty("sortProperties")
     @ApiModelProperty(notes = "排序属性")
-    private String sortProperties = "statisticId";
+    private String sortProperties = "statisticUpdateTime";
 }

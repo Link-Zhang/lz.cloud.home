@@ -28,9 +28,9 @@ public class HistoryInput {
 
     @JsonProperty("sortDirection")
     @ApiModelProperty(notes = "排序方向")
-    private Sort.Direction sortDirection = Sort.Direction.ASC;
+    private Sort.Direction sortDirection = Sort.Direction.DESC;
 
     @JsonProperty("sortProperties")
     @ApiModelProperty(notes = "排序属性")
-    private String sortProperties = "historyId";
+    private String sortProperties = "historyUpdateTime";
 }
