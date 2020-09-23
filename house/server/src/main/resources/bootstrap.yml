@@ -8,6 +8,9 @@ management:
     web:
       exposure:
         include: health
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
 spring:
   application:
     name: house
